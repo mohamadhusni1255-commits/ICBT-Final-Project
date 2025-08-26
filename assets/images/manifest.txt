@@ -1,0 +1,43 @@
+# TalentUp Sri Lanka - Image Assets Manifest
+
+Required images for the platform:
+
+## Hero and Landing Page
+- hero-talent-show.jpg (1920x1080) - Main hero background image
+- hero-talent-show-thumb.jpg (480x270) - Optimized thumbnail version
+
+## Video Placeholders
+- placeholder-video.jpg (854x480) - Default video thumbnail
+- placeholder-video-thumb.jpg (480x270) - Optimized video thumbnail
+
+## Icon Assets (SVG preferred, fallback PNG)
+- icon-upload.svg - Upload/video icon
+- icon-judge.svg - Judge/feedback icon  
+- icon-trophy.svg - Competition/trophy icon
+- icon-mobile.svg - Mobile device icon
+- icon-secure.svg - Security/lock icon
+- icon-multilingual.svg - Language/globe icon
+
+## User Interface Elements
+- avatar-placeholder.png (100x100) - Default user avatar
+- logo-square.png (256x256) - Square logo for social media
+- favicon.ico (32x32) - Browser favicon
+
+## Instructions for Manual Download
+
+If automated download fails, manually download these free images from Pexels or Unsplash:
+
+### Hero Images:
+1. Search: "talent show stage performance" 
+2. Search: "young person singing microphone"
+3. Search: "sri lanka youth performance"
+
+### Video Placeholders:
+1. Search: "video play button overlay"
+2. Search: "performance stage lights"
+
+### Icons:
+Use Feather Icons, Heroicons, or create simple SVG icons for:
+- Upload, Judge, Trophy, Mobile, Security, Language symbols
+
+Save all images in assets/images/ directory with the names specified in this manifest.

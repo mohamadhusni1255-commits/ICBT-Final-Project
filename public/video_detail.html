@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Details - TalentUp Sri Lanka</title>
+    <style>
+        :root {
+            --primary-color: #3B82F6;
+            --secondary-color: #14B8A6;
+            --accent-color: #F97316;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --bg-white: #FFFFFF;
+            --bg-gray-50: #F9FAFB;
+            --bg-gray-100: #F3F4F6;
+            --border-color: #E5E7EB;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-gray-50);
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563EB;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .video-section {
+            background: var(--bg-white);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .video-player {
+            position: relative;
+            background: #000;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .video-player video {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            display: block;
+        }
+
+        .video-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .video-info {
+            margin-bottom: 2rem;
+        }
+
+        .video-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .video-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .uploader-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upload-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-description {
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .like-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            background: var(--bg-white);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .like-button:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .like-button.liked {
+            border-color: var(--error-color);
+            color: var(--error-color);
+            background: #FEF2F2;
+        }
+
+        .like-button.liked:hover {
+            background: var(--error-color);
+            color: white;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .feedback-summary-card {
+            background: var(--bg-white);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+
+        .feedback-summary-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .scores-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .score-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-gray-50);
+            border-radius: 0.5rem;
+        }
+
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        .category-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .aggregated-text {
+            color: var(--text-light);
+            line-height: 1.6;
+            font-size: 0.875rem;
+        }
+
+        /* Judge Feedback Form */
+        .judge-feedback-card {
+            background: var(--bg-white);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .score-input {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .score-slider {
+            flex: 1;
+            height: 4px;
+            background: var(--bg-gray-100);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .score-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .score-display {
+            font-weight: 700;
+            color: var(--primary-color);
+            min-width: 2rem;
+            text-align: center;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Feedback List */
+        .feedback-list {
+            background: var(--bg-white);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+
+        .feedback-item {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feedback-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .judge-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .feedback-date {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .feedback-scores {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-badge {
+            background: var(--bg-gray-100);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .feedback-comments {
+            color: var(--text-dark);
+            line-height: 1.5;
+            font-size: 0.875rem;
+        }
+
+        /* Error and Loading States */
+        .error-message {
+            background: #FEF2F2;
+            color: var(--error-color);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #FECACA;
+            display: none;
+        }
+
+        .success-message {
+            background: #F0FDF4;
+            color: var(--success-color);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #BBF7D0;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .video-section,
+            .feedback-summary-card,
+            .judge-feedback-card,
+            .feedback-list {
+                padding: 1rem;
+            }
+
+            .video-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .scores-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feedback-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            .feedback-scores {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo" data-lang="site_title">TalentUp Sri Lanka</a>
+            <ul class="nav-links">
+                <li><a href="/video_list.html" data-lang="nav_videos">← Back to Videos</a></li>
+                <li><a href="/dashboard_user.html" data-lang="nav_dashboard">Dashboard</a></li>
+                <li id="authButton">
+                    <a href="/login.html" class="btn btn-outline" data-lang="nav_login">Login</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section class="video-section">
+            <div class="video-player" id="videoPlayer">
+                <div class="video-loading" id="videoLoading">
+                    <div class="spinner"></div>
+                    <p data-lang="loading_video">Loading video...</p>
+                </div>
+                <video id="videoElement" controls style="display: none;">
+                    <source src="" type="video/mp4">
+                    <p data-lang="video_not_supported">Your browser doesn't support HTML5 video. Here is a <a href="#">link to the video</a> instead.</p>
+                </video>
+            </div>
+
+            <div class="video-info">
+                <h1 class="video-title" id="videoTitle">Loading...</h1>
+                <div class="video-meta">
+                    <div class="uploader-info">
+                        <span>👤</span>
+                        <span id="videoUploader" data-lang="uploaded_by">Uploaded by: Loading...</span>
+                    </div>
+                    <div class="upload-date">
+                        <span>📅</span>
+                        <span id="videoDate">Loading...</span>
+                    </div>
+                </div>
+                <div class="video-description" id="videoDescription">
+                    Loading description...
+                </div>
+
+                <div class="video-actions">
+                    <button class="like-button" id="likeButton">
+                        <span class="like-icon">❤️</span>
+                        <span class="like-text" data-lang="like_button">Like</span>
+                        <span class="like-count" id="likeCount">0</span>
+                    </button>
+                    <button class="btn btn-outline" onclick="shareVideo()" data-lang="share_button">Share</button>
+                </div>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+        </section>
+
+        <aside class="sidebar">
+            <!-- Feedback Summary Card -->
+            <div class="feedback-summary-card" id="feedbackSummaryCard" style="display: none;">
+                <h3 class="feedback-summary-title" data-lang="feedback_summary_title">Judge Feedback Summary</h3>
+                
+                <div class="scores-grid" id="scoresGrid">
+                    <div class="score-item">
+                        <span class="score-value" id="avgVoice">0.0</span>
+                        <span class="score-label" data-lang="score_voice">Voice</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-value" id="avgCreativity">0.0</span>
+                        <span class="score-label" data-lang="score_creativity">Creativity</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-value" id="avgPresentation">0.0</span>
+                        <span class="score-label" data-lang="score_presentation">Presentation</span>
+                    </div>
+                </div>
+
+                <div class="category-label" id="categoryLabel">No Category</div>
+                <div class="aggregated-text" id="aggregatedText">No feedback summary available yet.</div>
+            </div>
+
+            <!-- Judge Feedback Form -->
+            <div class="judge-feedback-card hidden" id="judgeFeedbackCard">
+                <h3 data-lang="give_feedback_title">Give Feedback</h3>
+                
+                <form id="feedbackForm">
+                    <div class="form-group">
+                        <label class="form-label" data-lang="score_voice">Voice Quality (0-10)</label>
+                        <div class="score-input">
+                            <input type="range" class="score-slider" id="scoreVoice" min="0" max="10" value="5">
+                            <span class="score-display" id="scoreVoiceDisplay">5</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" data-lang="score_creativity">Creativity (0-10)</label>
+                        <div class="score-input">
+                            <input type="range" class="score-slider" id="scoreCreativity" min="0" max="10" value="5">
+                            <span class="score-display" id="scoreCreativityDisplay">5</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" data-lang="score_presentation">Presentation (0-10)</label>
+                        <div class="score-input">
+                            <input type="range" class="score-slider" id="scorePresentation" min="0" max="10" value="5">
+                            <span class="score-display" id="scorePresentationDisplay">5</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" data-lang="feedback_comments">Comments</label>
+                        <textarea class="form-textarea" id="feedbackComments" placeholder="Share your detailed feedback..." data-lang-placeholder="feedback_comments_placeholder"></textarea>
+                    </div>
+
+                    <input type="hidden" id="csrfToken" name="csrf_token">
+                    <button type="submit" class="btn btn-primary" id="submitFeedbackBtn">
+                        <span data-lang="submit_feedback">Submit Feedback</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Feedback List -->
+            <div class="feedback-list">
+                <h3 data-lang="all_feedback_title">All Feedback</h3>
+                <div id="feedbackList" class="loading">
+                    <div class="spinner"></div>
+                    <p data-lang="loading_feedback">Loading feedback...</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let currentVideo = null;
+        let videoId = null;
+        let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
+        let translations = {};
+
+        // Get video ID from URL
+        function getVideoId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id') || window.location.pathname.split('/').pop().replace('.html', '');
+        }
+
+        // Load language file
+        async function loadLanguage(lang) {
+            try {
+                const response = await fetch(`/lang/${lang}.json`);
+                if (response.ok) {
+                    translations = await response.json();
+                    applyTranslations();
+                    currentLanguage = lang;
+                    localStorage.setItem('preferredLanguage', lang);
+                }
+            } catch (error) {
+                console.error('Failed to load language:', error);
+            }
+        }
+
+        // Apply translations to page
+        function applyTranslations() {
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                const key = element.getAttribute('data-lang');
+                if (translations[key]) {
+                    element.textContent = translations[key];
+                }
+            });
+
+            document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-lang-placeholder');
+                if (translations[key]) {
+                    element.placeholder = translations[key];
+                }
+            });
+        }
+
+        // Check authentication status
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/auth/me');
+                if (response.ok) {
+                    const data = await response.json();
+                    currentUser = data.user;
+                    updateAuthButton(data.user);
+                    
+                    // Show judge feedback form if user is judge or admin
+                    if (data.user.role === 'judge' || data.user.role === 'admin') {
+                        document.getElementById('judgeFeedbackCard').classList.remove('hidden');
+                    }
+                } else {
+                    currentUser = null;
+                    updateAuthButton(null);
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                currentUser = null;
+                updateAuthButton(null);
+            }
+        }
+
+        // Update auth button based on login status
+        function updateAuthButton(user) {
+            const authButton = document.getElementById('authButton');
+            if (user) {
+                authButton.innerHTML = `<button onclick="logout()" class="btn btn-outline" data-lang="nav_logout">Logout</button>`;
+            } else {
+                authButton.innerHTML = `<a href="/login.html" class="btn btn-outline" data-lang="nav_login">Login</a>`;
+            }
+            applyTranslations();
+        }
+
+        // Logout function
+        async function logout() {
+            try {
+                const response = await fetch('/api/auth/logout', { method: 'POST' });
+                if (response.ok) {
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
+        }
+
+        // Get CSRF token
+        async function getCSRFToken() {
+            try {
+                const response = await fetch('/api/auth/csrf-token');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('csrfToken').value = data.csrf_token;
+                }
+            } catch (error) {
+                console.error('Failed to get CSRF token:', error);
+            }
+        }
+
+        // Load video details
+        async function loadVideo() {
+            try {
+                const response = await fetch(`/api/videos/${videoId}`);
+                if (!response.ok) {
+                    throw new Error('Video not found');
+                }
+
+                const data = await response.json();
+                currentVideo = data.video;
+
+                // Update video information
+                document.getElementById('videoTitle').textContent = currentVideo.title;
+                document.getElementById('videoUploader').textContent = `Uploaded by: ${currentVideo.uploader?.username || 'Unknown'}`;
+                document.getElementById('videoDate').textContent = new Date(currentVideo.created_at).toLocaleDateString();
+                document.getElementById('videoDescription').textContent = currentVideo.description || 'No description provided';
+
+                // Setup video player
+                const videoElement = document.getElementById('videoElement');
+                const videoLoading = document.getElementById('videoLoading');
+                
+                videoElement.src = currentVideo.signed_url;
+                videoElement.style.display = 'block';
+                videoLoading.style.display = 'none';
+
+                // Update like button
+                updateLikeButton(currentVideo.user_liked, currentVideo.like_count);
+
+                // Load feedback summary
+                if (currentVideo.feedback_summary) {
+                    showFeedbackSummary(currentVideo.feedback_summary);
+                }
+
+            } catch (error) {
+                console.error('Failed to load video:', error);
+                showError('Failed to load video details');
+            }
+        }
+
+        // Update like button
+        function updateLikeButton(liked, count) {
+            const likeButton = document.getElementById('likeButton');
+            const likeText = likeButton.querySelector('.like-text');
+            const likeCount = document.getElementById('likeCount');
+
+            likeButton.classList.toggle('liked', liked);
+            likeText.textContent = liked ? (translations.unlike_button || 'Unlike') : (translations.like_button || 'Like');
+            likeCount.textContent = count || 0;
+        }
+
+        // Show feedback summary
+        function showFeedbackSummary(summary) {
+            const card = document.getElementById('feedbackSummaryCard');
+            
+            document.getElementById('avgVoice').textContent = summary.avg_voice?.toFixed(1) || '0.0';
+            document.getElementById('avgCreativity').textContent = summary.avg_creativity?.toFixed(1) || '0.0';
+            document.getElementById('avgPresentation').textContent = summary.avg_presentation?.toFixed(1) || '0.0';
+            document.getElementById('categoryLabel').textContent = summary.category_label || 'No Category';
+            document.getElementById('aggregatedText').textContent = summary.aggregated_text || 'No feedback summary available yet.';
+
+            card.style.display = 'block';
+        }
+
+        // Toggle like
+        async function toggleLike() {
+            if (!currentUser) {
+                showError(translations.login_required || 'Please login to like videos');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/videos/${videoId}/like`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        csrf_token: document.getElementById('csrfToken').value
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    updateLikeButton(data.liked, data.like_count);
+                } else {
+                    const error = await response.json();
+                    showError(error.error || 'Failed to update like');
+                }
+            } catch (error) {
+                console.error('Like toggle failed:', error);
+                showError('Failed to update like');
+            }
+        }
+
+        // Load feedback list
+        async function loadFeedback() {
+            try {
+                const response = await fetch(`/api/feedback/video/${videoId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    displayFeedback(data.feedback);
+                }
+            } catch (error) {
+                console.error('Failed to load feedback:', error);
+                document.getElementById('feedbackList').innerHTML = '<p>Failed to load feedback</p>';
+            }
+        }
+
+        // Display feedback
+        function displayFeedback(feedbackList) {
+            const feedbackContainer = document.getElementById('feedbackList');
+            
+            if (!feedbackList || feedbackList.length === 0) {
+                feedbackContainer.innerHTML = `<p data-lang="no_feedback">No feedback available yet.</p>`;
+                applyTranslations();
+                return;
+            }
+
+            const feedbackHTML = feedbackList.map(feedback => {
+                const date = new Date(feedback.created_at).toLocaleDateString();
+                return `
+                    <div class="feedback-item">
+                        <div class="feedback-header">
+                            <span class="judge-name">${feedback.judge?.username || 'Anonymous Judge'}</span>
+                            <span class="feedback-date">${date}</span>
+                        </div>
+                        <div class="feedback-scores">
+                            <span class="score-badge">Voice: ${feedback.score_voice}/10</span>
+                            <span class="score-badge">Creativity: ${feedback.score_creativity}/10</span>
+                            <span class="score-badge">Presentation: ${feedback.score_presentation}/10</span>
+                        </div>
+                        <div class="feedback-comments">${feedback.comments || 'No comments provided'}</div>
+                    </div>
+                `;
+            }).join('');
+
+            feedbackContainer.innerHTML = feedbackHTML;
+        }
+
+        // Submit feedback
+        async function submitFeedback(event) {
+            event.preventDefault();
+
+            if (!currentUser || (currentUser.role !== 'judge' && currentUser.role !== 'admin')) {
+                showError('Only judges can submit feedback');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitFeedbackBtn');
+            const formData = new FormData(event.target);
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                const response = await fetch('/api/feedback/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        video_id: videoId,
+                        score_voice: parseInt(document.getElementById('scoreVoice').value),
+                        score_creativity: parseInt(document.getElementById('scoreCreativity').value),
+                        score_presentation: parseInt(document.getElementById('scorePresentation').value),
+                        comments: document.getElementById('feedbackComments').value,
+                        csrf_token: document.getElementById('csrfToken').value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess(data.message || 'Feedback submitted successfully');
+                    loadFeedback(); // Reload feedback list
+                    loadVideo(); // Reload video to update summary
+                } else {
+                    showError(data.error || 'Failed to submit feedback');
+                }
+            } catch (error) {
+                console.error('Feedback submission failed:', error);
+                showError('Network error. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = translations.submit_feedback || 'Submit Feedback';
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+            successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Share video
+        function shareVideo() {
+            const url = window.location.href;
+            const title = currentVideo?.title || 'Check out this talent video';
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    url: url
+                }).catch(console.error);
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(url).then(() => {
+                    showSuccess('Video URL copied to clipboard!');
+                }).catch(() => {
+                    showError('Failed to copy URL');
+                });
+            }
+        }
+
+        // Update score displays
+        function updateScoreDisplay(sliderId, displayId) {
+            const slider = document.getElementById(sliderId);
+            const display = document.getElementById(displayId);
+            
+            slider.addEventListener('input', function() {
+                display.textContent = this.value;
+            });
+        }
+
+        // Event listeners
+        document.getElementById('likeButton').addEventListener('click', toggleLike);
+        document.getElementById('feedbackForm').addEventListener('submit', submitFeedback);
+
+        // Setup score sliders
+        updateScoreDisplay('scoreVoice', 'scoreVoiceDisplay');
+        updateScoreDisplay('scoreCreativity', 'scoreCreativityDisplay');
+        updateScoreDisplay('scorePresentation', 'scorePresentationDisplay');
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async function() {
+            videoId = getVideoId();
+            
+            if (!videoId) {
+                showError('Video ID not provided');
+                return;
+            }
+
+            await loadLanguage(currentLanguage);
+            await checkAuth();
+            await getCSRFToken();
+            await loadVideo();
+            await loadFeedback();
+        });
+
+        // Handle video load errors
+        document.getElementById('videoElement').addEventListener('error', function() {
+            document.getElementById('videoLoading').innerHTML = `
+                <p style="color: red;">Failed to load video. The video may have been removed or is temporarily unavailable.</p>
+            `;
+        });
+
+        // Handle video load success
+        document.getElementById('videoElement').addEventListener('loadeddata', function() {
+            document.getElementById('videoLoading').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
