@@ -79,8 +79,8 @@ To export this diagram as PNG: Copy the mermaid code to [mermaid.live](https://m
 
 ### 1. Clone and Install
 ```bash
-git clone https://github.com/yourusername/talentup-srilanka.git
-cd talentup-srilanka
+git clone https://github.com/mohamadhusni1255-commits/ICBT-Final-Project.git
+cd ICBT-Final-Project
 npm install
 ```
 
@@ -121,7 +121,7 @@ npm install
 
 ### 3. Environment Configuration
 ```bash
-cp .env.example .env
+cp config.env.example .env
 ```
 
 Edit `.env` with your Supabase credentials:
@@ -187,7 +187,7 @@ git init
 git add .
 git commit -m "Initial TalentUp Sri Lanka platform"
 git branch -M main
-git remote add origin https://github.com/yourusername/talentup-srilanka.git
+git remote add origin https://github.com/mohamadhusni1255-commits/ICBT-Final-Project.git
 git push -u origin main
 ```
 
