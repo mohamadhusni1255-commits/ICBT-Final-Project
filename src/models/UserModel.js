@@ -80,6 +80,77 @@ class UserModel {
     if (error) throw error;
     return data;
   }
+
+  static async updateRoleWithPermission(id, newRole, currentUserRole) {
+    // Only super admins can create other super admins or judges
+    if (newRole === 'super_admin' && currentUserRole !== 'super_admin') {
+      throw new Error('Only super admins can create other super admins');
+    }
+    
+    if (newRole === 'judge' && currentUserRole !== 'super_admin') {
+      throw new Error('Only super admins can create judges');
+    }
+    
+    const { data, error } = await supabase
+      .from('users')
+      .update({ role: newRole })
+      .eq('id', id)
+      .select('id, username, email, role, age_group, created_at')
+      .single();
+    
+    if (error) throw error;
+    return data;
+  }
+
+  static async createSuperAdmin(userData) {
+    // Ensure the user being created has super_admin role
+    userData.role = 'super_admin';
+    
+    const { data, error } = await supabase
+      .from('users')
+      .insert([userData])
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  }
+
+  static async createJudge(userData) {
+    // Ensure the user being created has judge role
+    userData.role = 'judge';
+    
+    const { data, error } = await supabase
+      .from('users')
+      .insert([userData])
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  }
+
+  static async findSuperAdmins() {
+    const { data, error } = await supabase
+      .from('users')
+      .select('id, username, email, role, age_group, created_at')
+      .eq('role', 'super_admin')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  }
+
+  static async findJudges() {
+    const { data, error } = await supabase
+      .from('users')
+      .select('id, username, email, role, age_group, created_at')
+      .eq('role', 'judge')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  }
   
   static async delete(id) {
     const { error } = await supabase

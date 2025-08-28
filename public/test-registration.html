@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Registration - TalentUp Sri Lanka</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background: #4361ee;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #3a56d4;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 4px;
+            background: #f8f9fa;
+            border-left: 4px solid #4361ee;
+        }
+        .error {
+            border-left-color: #ef476f;
+            background: #fff5f5;
+        }
+        .success {
+            border-left-color: #06d6a0;
+            background: #f0fff4;
+        }
+        .demo-users {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Registration Test Page</h1>
+    
+    <div class="test-section">
+        <h2>1. Supabase Client Status</h2>
+        <div id="clientStatus">Checking...</div>
+        <button onclick="checkClientStatus()">Check Status</button>
+        <button onclick="initializeClient()">Initialize Client</button>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Test Registration Form</h2>
+        <form id="testForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required value="testuser">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required value="test@example.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required value="password123">
+            </div>
+            <div class="form-group">
+                <label for="ageGroup">Age Group:</label>
+                <select id="ageGroup" name="ageGroup">
+                    <option value="">Select age group</option>
+                    <option value="15-19" selected>15-19 years</option>
+                    <option value="20-30">20-30 years</option>
+                </select>
+            </div>
+            <button type="submit">Test Registration</button>
+        </form>
+        <div id="registrationResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" name="email" required value="test@example.com">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" name="password" required value="password123">
+            </div>
+            <button type="submit">Test Login</button>
+        </form>
+        <div id="loginResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Demo Database Status</h2>
+        <div id="demoStatus">Checking...</div>
+        <button onclick="checkDemoStatus()">Check Demo Data</button>
+        <button onclick="clearDemoData()">Clear Demo Data</button>
+        <div id="demoUsers" class="demo-users"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>5. Current User Session</h2>
+        <div id="sessionStatus">Checking...</div>
+        <button onclick="checkSession()">Check Session</button>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Test functions
+        function checkClientStatus() {
+            const status = document.getElementById('clientStatus');
+            if (window.supabaseClient) {
+                status.innerHTML = `
+                    <div class="result success">
+                        ✅ Supabase client is initialized<br>
+                        Type: ${window.supabaseClient.auth ? 'Mock Client' : 'Unknown'}<br>
+                        Auth methods: ${window.supabaseClient.auth ? Object.keys(window.supabaseClient.auth).join(', ') : 'None'}
+                    </div>
+                `;
+            } else {
+                status.innerHTML = `
+                    <div class="result error">
+                        ❌ Supabase client is NOT initialized
+                    </div>
+                `;
+            }
+        }
+
+        function initializeClient() {
+            if (window.initializeSupabaseClient) {
+                window.initializeSupabaseClient();
+                setTimeout(checkClientStatus, 500);
+            } else {
+                document.getElementById('clientStatus').innerHTML = `
+                    <div class="result error">
+                        ❌ initializeSupabaseClient function not found
+                    </div>
+                `;
+            }
+        }
+
+        function checkDemoStatus() {
+            const demoUsers = JSON.parse(localStorage.getItem('demoUsers') || '[]');
+            const status = document.getElementById('demoStatus');
+            const usersDiv = document.getElementById('demoUsers');
+            
+            status.innerHTML = `
+                <div class="result success">
+                    ✅ Demo database has ${demoUsers.length} users
+                </div>
+            `;
+            
+            if (demoUsers.length > 0) {
+                usersDiv.innerHTML = '<h4>Registered Users:</h4>' + 
+                    demoUsers.map(user => `
+                        <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 4px;">
+                            <strong>ID:</strong> ${user.id}<br>
+                            <strong>Email:</strong> ${user.email}<br>
+                            <strong>Username:</strong> ${user.metadata?.username || 'N/A'}<br>
+                            <strong>Role:</strong> ${user.metadata?.role || 'user'}<br>
+                            <strong>Created:</strong> ${new Date(user.created_at).toLocaleString()}
+                        </div>
+                    `).join('');
+            } else {
+                usersDiv.innerHTML = '<p>No users registered yet.</p>';
+            }
+        }
+
+        function clearDemoData() {
+            localStorage.removeItem('demoUsers');
+            localStorage.removeItem('currentUser');
+            checkDemoStatus();
+            checkSession();
+        }
+
+        function checkSession() {
+            const currentUser = localStorage.getItem('currentUser');
+            const status = document.getElementById('sessionStatus');
+            
+            if (currentUser) {
+                try {
+                    const user = JSON.parse(currentUser);
+                    status.innerHTML = `
+                        <div class="result success">
+                            ✅ User logged in:<br>
+                            ID: ${user.id}<br>
+                            Email: ${user.email}<br>
+                            Username: ${user.username || 'N/A'}<br>
+                            Role: ${user.role || 'user'}
+                        </div>
+                    `;
+                } catch (error) {
+                    status.innerHTML = `
+                        <div class="result error">
+                            ❌ Invalid session data: ${error.message}
+                        </div>
+                    `;
+                }
+            } else {
+                status.innerHTML = `
+                    <div class="result">
+                        ℹ️ No user session found
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            checkSession();
+        }
+
+        // Form event listeners
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const result = document.getElementById('registrationResult');
+            result.innerHTML = '<div class="result">Processing registration...</div>';
+            
+            try {
+                if (!window.supabaseClient) {
+                    throw new Error('Supabase client not initialized');
+                }
+                
+                const formData = new FormData(e.target);
+                const { data, error } = await window.supabaseClient.auth.signUp({
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    options: {
+                        data: {
+                            username: formData.get('username'),
+                            age_group: formData.get('ageGroup') || null,
+                            role: 'user'
+                        }
+                    }
+                });
+                
+                if (error) {
+                    result.innerHTML = `<div class="result error">❌ Registration failed: ${error.message}</div>`;
+                } else if (data && data.user) {
+                    result.innerHTML = `
+                        <div class="result success">
+                            ✅ Registration successful!<br>
+                            User ID: ${data.user.id}<br>
+                            Email: ${data.user.email}
+                        </div>
+                    `;
+                    // Update demo status
+                    setTimeout(checkDemoStatus, 500);
+                } else {
+                    result.innerHTML = `<div class="result error">❌ Registration failed - no user data received</div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const result = document.getElementById('loginResult');
+            result.innerHTML = '<div class="result">Processing login...</div>';
+            
+            try {
+                if (!window.supabaseClient) {
+                    throw new Error('Supabase client not initialized');
+                }
+                
+                const formData = new FormData(e.target);
+                const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+                    email: formData.get('email'),
+                    password: formData.get('password')
+                });
+                
+                if (error) {
+                    result.innerHTML = `<div class="result error">❌ Login failed: ${error.message}</div>`;
+                } else if (data && data.user) {
+                    result.innerHTML = `
+                        <div class="result success">
+                            ✅ Login successful!<br>
+                            User ID: ${data.user.id}<br>
+                            Email: ${data.user.email}
+                        </div>
+                    `;
+                    // Store in session
+                    localStorage.setItem('currentUser', JSON.stringify({
+                        id: data.user.id,
+                        email: data.user.email,
+                        username: data.user.user_metadata?.username || 'N/A',
+                        role: data.user.user_metadata?.role || 'user'
+                    }));
+                    setTimeout(checkSession, 500);
+                } else {
+                    result.innerHTML = `<div class="result error">❌ Login failed - no user data received</div>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test page loaded');
+            setTimeout(() => {
+                checkClientStatus();
+                checkDemoStatus();
+                checkSession();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

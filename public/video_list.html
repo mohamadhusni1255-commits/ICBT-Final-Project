@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="">
+    <title>Video List - TalentUp Sri Lanka</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --error: #ef476f;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray-100: #e9ecef;
+            --gray-200: #dee2e6;
+            --gray-300: #ced4da;
+            --gray-400: #adb5bd;
+            --gray-500: #6c757d;
+            --gray-600: #495057;
+            --gray-700: #343a40;
+            --gray-800: #212529;
+            --border-radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf1 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Button Animations and Shapes */
+        .btn {
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-block;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        /* Navigation Link Animations */
+        .nav-links a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(67, 97, 238, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .nav-links a.active {
+            background: var(--primary);
+            color: white;
+            clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%);
+        }
+
+        .nav-links a.active:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 5%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filters and Search */
+        .filters-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .filter-select, .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus, .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+        }
+
+        /* Video Grid */
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .video-content {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .video-uploader {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .uploader-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .video-stats {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-description {
+            color: var(--gray-700);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-category {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
+            color: var(--primary);
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            color: var(--dark);
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .pagination-btn:hover, .pagination-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            margin-bottom: 15px;
+        }
+
+        .empty-description {
+            color: var(--gray-500);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo" data-lang="site_title">TalentUp Sri Lanka</a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="video_list.html" class="active"><i class="fas fa-play-circle"></i> Videos</a></li>
+                <li><a href="dashboard_user.html" id="dashboardBtn" style="display: none;"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="admin_panel.html" id="adminBtn" style="display: none;"><i class="fas fa-cog"></i> Admin Panel</a></li>
+                <li><a href="judge_panel.html" id="judgeBtn" style="display: none;"><i class="fas fa-gavel"></i> Judge Panel</a></li>
+                <li><a href="profile.html" id="profileBtn" style="display: none;"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="login.html" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="register.html" id="registerBtn"><i class="fas fa-user-plus"></i> Register</a></li>
+                <li><a href="#" onclick="logout()" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="si">සිංහල</option>
+                    <option value="ta">தமிழ்</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <div class="page-header fade-in">
+            <h1 class="page-title">Discover Amazing Talent</h1>
+            <p class="page-subtitle">Browse through our collection of exceptional talent videos from across Sri Lanka</p>
+        </div>
+
+        <section class="filters-section fade-in">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Search Videos</label>
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search by title, description...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="music">Music</option>
+                        <option value="dance">Dance</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="acting">Acting</option>
+                        <option value="art">Art</option>
+                        <option value="sports">Sports</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Sort By</label>
+                    <select class="filter-select">
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="videos-grid" id="videosGrid">
+            <!-- Video cards will be dynamically inserted here -->
+        </section>
+
+        <div class="pagination">
+            <a href="#" class="pagination-btn"><i class="fas fa-chevron-left"></i></a>
+            <a href="#" class="pagination-btn active">1</a>
+            <a href="#" class="pagination-btn">2</a>
+            <a href="#" class="pagination-btn">3</a>
+            <a href="#" class="pagination-btn"><i class="fas fa-chevron-right"></i></a>
+        </div>
+    </main>
+
+    <script>
+        // Video data will be loaded from backend API
+        let videos = [];
+        let currentPage = 1;
+        let totalPages = 1;
+
+        // Function to generate video cards
+        function generateVideoCards(videos) {
+            const videosGrid = document.getElementById('videosGrid');
+            
+            if (videos.length === 0) {
+                videosGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-film"></i></div>
+                        <h3 class="empty-title">No Videos Found</h3>
+                        <p class="empty-description">No videos are available at the moment. Check back later!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            videosGrid.innerHTML = '';
+            
+            videos.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'video-card fade-in';
+                
+                // Format upload date
+                const uploadDate = new Date(video.created_at);
+                const timeAgo = getTimeAgo(uploadDate);
+                
+                // Get uploader name (handle both object and string formats)
+                const uploaderName = video.uploader_name || video.uploader || 'Unknown User';
+                const uploaderInitial = uploaderName.charAt(0).toUpperCase();
+                
+                // Get thumbnail (use default if none)
+                const thumbnail = video.thumbnail || 'assets/images/default-thumbnail.jpg';
+                
+                // Get duration (use default if none)
+                const duration = video.duration || '0:00';
+                
+                card.innerHTML = `
+                    <div class="video-thumbnail">
+                        <img src="${thumbnail}" alt="${video.title}" onerror="this.src='assets/images/default-thumbnail.jpg'">
+                        <div class="video-duration">${duration}</div>
+                    </div>
+                    <div class="video-content">
+                        <div class="video-category">${video.category || 'Uncategorized'}</div>
+                        <h3 class="video-title">${video.title || 'Untitled Video'}</h3>
+                        <p class="video-description">${video.description || 'No description available'}</p>
+                        <div class="video-meta">
+                            <div class="video-uploader">
+                                <div class="uploader-avatar">${uploaderInitial}</div>
+                                ${uploaderName}
+                            </div>
+                            <div class="video-stats">
+                                <div class="stat"><i class="fas fa-eye"></i> ${(video.views || 0).toLocaleString()}</div>
+                                <div class="stat"><i class="fas fa-heart"></i> ${(video.likes || 0).toLocaleString()}</div>
+                            </div>
+                        </div>
+                        <div class="video-actions">
+                            <a href="video_detail.html?id=${video.id}" class="btn btn-primary" style="flex: 1;">
+                                <i class="fas fa-play"></i> Watch Now
+                            </a>
+                            <button class="btn btn-outline like-btn" data-video-id="${video.id}" onclick="toggleLike(${video.id})">
+                                <i class="fas fa-heart ${video.user_liked ? 'liked' : ''}"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                videosGrid.appendChild(card);
+            });
+        }
+
+        // Get time ago from date
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return Math.floor(diffInSeconds / 60) + ' minutes ago';
+            if (diffInSeconds < 86400) return Math.floor(diffInSeconds / 3600) + ' hours ago';
+            if (diffInSeconds < 2592000) return Math.floor(diffInSeconds / 86400) + ' days ago';
+            return Math.floor(diffInSeconds / 2592000) + ' months ago';
+        }
+
+        // Toggle video like
+        async function toggleLike(videoId) {
+            try {
+                const response = await fetch('/api/videos/like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': getCSRFToken()
+                    },
+                    body: JSON.stringify({ video_id: videoId })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        // Update like button appearance
+                        const likeBtn = document.querySelector(`[data-video-id="${videoId}"]`);
+                        if (likeBtn) {
+                            const icon = likeBtn.querySelector('i');
+                            if (data.liked) {
+                                icon.classList.add('liked');
+                            } else {
+                                icon.classList.remove('liked');
+                            }
+                        }
+                        // Reload videos to update counts
+                        loadVideos(currentPage);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to toggle like:', error);
+            }
+        }
+
+        // Get CSRF token
+        function getCSRFToken() {
+            return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+        }
+
+        // Load videos from backend API
+        async function loadVideos(page = 1, search = '', category = '', sortBy = 'newest') {
+            try {
+                const params = new URLSearchParams({
+                    page: page,
+                    limit: 12,
+                    search: search,
+                    category: category,
+                    order_by: sortBy === 'newest' ? 'created_at' : 
+                             sortBy === 'popular' ? 'views' : 'likes',
+                    order_dir: 'DESC'
+                });
+
+                const response = await fetch(`/api/videos/list?${params}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        videos = data.videos || [];
+                        totalPages = data.pagination?.pages || 1;
+                        currentPage = page;
+                        generateVideoCards(videos);
+                        updatePagination();
+                    } else {
+                        console.error('Failed to load videos:', data.error);
+                        showEmptyState();
+                    }
+                } else {
+                    throw new Error('Failed to fetch videos');
+                }
+            } catch (error) {
+                console.error('Error loading videos:', error);
+                showEmptyState();
+            }
+        }
+
+        // Show empty state when no videos
+        function showEmptyState() {
+            const videosGrid = document.getElementById('videosGrid');
+            videosGrid.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon"><i class="fas fa-film"></i></div>
+                    <h3 class="empty-title">No Videos Found</h3>
+                    <p class="empty-description">No videos are available at the moment. Check back later!</p>
+                </div>
+            `;
+        }
+
+        // Update pagination
+        function updatePagination() {
+            const pagination = document.querySelector('.pagination');
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+
+            pagination.style.display = 'flex';
+            let paginationHTML = `
+                <a href="#" class="pagination-btn" onclick="changePage(${currentPage - 1})" ${currentPage <= 1 ? 'style="opacity: 0.5; pointer-events: none;"' : ''}>
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHTML += `<a href="#" class="pagination-btn active">${i}</a>`;
+                } else {
+                    paginationHTML += `<a href="#" class="pagination-btn" onclick="changePage(${i})">${i}</a>`;
+                }
+            }
+
+            paginationHTML += `
+                <a href="#" class="pagination-btn" onclick="changePage(${currentPage + 1})" ${currentPage >= totalPages ? 'style="opacity: 0.5; pointer-events: none;"' : ''}>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            `;
+
+            pagination.innerHTML = paginationHTML;
+        }
+
+        // Change page
+        function changePage(page) {
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            const searchInput = document.querySelector('.search-input');
+            const categoryFilter = document.querySelector('select[class="filter-select"]:first-of-type');
+            const sortFilter = document.querySelector('select[class="filter-select"]:last-of-type');
+            
+            loadVideos(page, searchInput.value, categoryFilter.value, sortFilter.value);
+        }
+
+        // Filter videos
+        function filterVideos() {
+            const searchInput = document.querySelector('.search-input');
+            const categoryFilter = document.querySelector('select[class="filter-select"]:first-of-type');
+            const sortFilter = document.querySelector('select[class="filter-select"]:last-of-type');
+            
+            currentPage = 1; // Reset to first page
+            loadVideos(currentPage, searchInput.value, categoryFilter.value, sortFilter.value);
+        }
+
+        // Update navigation based on user role and authentication
+        function updateNavigation() {
+            try {
+                const currentUser = localStorage.getItem('currentUser');
+                const loginBtn = document.getElementById('loginBtn');
+                const registerBtn = document.getElementById('registerBtn');
+                const profileBtn = document.getElementById('profileBtn');
+                const logoutBtn = document.getElementById('logoutBtn');
+                const dashboardBtn = document.getElementById('dashboardBtn');
+                const adminBtn = document.getElementById('adminBtn');
+                const judgeBtn = document.getElementById('judgeBtn');
+                
+                // Check if all elements exist
+                if (!loginBtn || !registerBtn || !profileBtn || !logoutBtn || !dashboardBtn || !adminBtn || !judgeBtn) {
+                    console.warn('Some navigation elements not found, skipping navigation update');
+                    return;
+                }
+                
+                if (currentUser) {
+                    try {
+                        const user = JSON.parse(currentUser);
+                        
+                        // Hide login/register buttons, show logout and profile
+                        loginBtn.style.display = 'none';
+                        registerBtn.style.display = 'none';
+                        profileBtn.style.display = 'inline-block';
+                        logoutBtn.style.display = 'inline-block';
+                        
+                        // Show role-based navigation options
+                        if (user.role === 'super_admin') {
+                            // Super admin has access to everything
+                            dashboardBtn.style.display = 'inline-block';
+                            adminBtn.style.display = 'inline-block';
+                            judgeBtn.style.display = 'inline-block';
+                        } else if (user.role === 'admin') {
+                            // Admin can access everything
+                            dashboardBtn.style.display = 'inline-block';
+                            adminBtn.style.display = 'inline-block';
+                            judgeBtn.style.display = 'inline-block';
+                        } else if (user.role === 'judge') {
+                            // Judge can access dashboard and judge panel
+                            dashboardBtn.style.display = 'inline-block';
+                            adminBtn.style.display = 'none';
+                            judgeBtn.style.display = 'inline-block';
+                        } else {
+                            // Regular user can only access dashboard
+                            dashboardBtn.style.display = 'inline-block';
+                            adminBtn.style.display = 'none';
+                            judgeBtn.style.display = 'none';
+                        }
+                        
+                    } catch (error) {
+                        console.error('Error parsing user data:', error);
+                        // Reset to default state on error
+                        resetNavigation();
+                    }
+                } else {
+                    // No user logged in - show only public navigation
+                    resetNavigation();
+                }
+            } catch (error) {
+                console.error('Error in updateNavigation:', error);
+            }
+        }
+        
+        // Reset navigation to default state (public access)
+        function resetNavigation() {
+            try {
+                const loginBtn = document.getElementById('loginBtn');
+                const registerBtn = document.getElementById('registerBtn');
+                const profileBtn = document.getElementById('profileBtn');
+                const logoutBtn = document.getElementById('logoutBtn');
+                const dashboardBtn = document.getElementById('dashboardBtn');
+                const adminBtn = document.getElementById('adminBtn');
+                const judgeBtn = document.getElementById('judgeBtn');
+                
+                // Check if all elements exist
+                if (!loginBtn || !registerBtn || !profileBtn || !logoutBtn || !dashboardBtn || !adminBtn || !judgeBtn) {
+                    console.warn('Some navigation elements not found, skipping navigation reset');
+                    return;
+                }
+                
+                loginBtn.style.display = 'inline-block';
+                registerBtn.style.display = 'inline-block';
+                profileBtn.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                dashboardBtn.style.display = 'none';
+                adminBtn.style.display = 'none';
+                judgeBtn.style.display = 'none';
+            } catch (error) {
+                console.error('Error in resetNavigation:', error);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNavigation(); // Update navigation first
+            loadCSRFToken();
+            loadVideos();
+            
+            // Add event listeners for filters
+            const searchInput = document.querySelector('.search-input');
+            const categoryFilter = document.querySelector('select[class="filter-select"]:first-of-type');
+            const sortFilter = document.querySelector('select[class="filter-select"]:last-of-type');
+            
+            searchInput.addEventListener('input', debounce(filterVideos, 500));
+            categoryFilter.addEventListener('change', filterVideos);
+            sortFilter.addEventListener('change', filterVideos);
+        });
+
+        // Load CSRF token
+        async function loadCSRFToken() {
+            try {
+                // For demo purposes, generate a mock CSRF token since API might not be available
+                const mockToken = 'mock-csrf-token-' + Date.now();
+                document.querySelector('meta[name="csrf-token"]').setAttribute('content', mockToken);
+                console.log('Using mock CSRF token for demo');
+                
+                // Try to fetch from API if available
+                try {
+                    const response = await fetch('/api/auth/csrf-token');
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            document.querySelector('meta[name="csrf-token"]').setAttribute('content', data.token);
+                        }
+                    }
+                } catch (apiError) {
+                    console.log('API not available, using mock CSRF token');
+                }
+            } catch (error) {
+                console.error('Failed to load CSRF token:', error);
+            }
+        }
+
+        // Debounce function for search input
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('userAvatar');
+            fetch('../php_api/auth_logout.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }).catch(error => {
+                console.error('Logout error:', error);
+            }).finally(() => {
+                window.location.href = 'login.html';
+            });
+        }
+    </script>
+</body>
+</html>

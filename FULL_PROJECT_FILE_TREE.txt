@@ -1,0 +1,810 @@
+TALENTUP SRI LANKA - FULL PROJECT WORKFLOW AND FILE EXPLANATION
+==============================================================
+
+PROJECT SUMMARY
+TalentUp Sri Lanka is a comprehensive talent showcase platform that allows users to upload, view, and rate talent videos. The project features role-based access control (user, admin, judge, super_admin), user authentication, profile management, video management, and feedback systems. Built with vanilla JavaScript frontend, PHP backend APIs, Node.js server components, and Supabase database/storage integration for a modern, scalable architecture.
+
+EXPANDED FILE TREE WITH DETAILED EXPLANATIONS
+============================================
+
+ICBT-final/
+├── .git/ → Git version control repository
+│   **Detailed Purpose**: Contains all Git history, branches, and version control metadata
+│   **Main Functions/Responsibilities**: Tracks code changes, enables collaboration, maintains project history
+│   **When to Edit**: Never edit directly - use Git commands (git add, commit, push, pull)
+│   **Connections**: Integrates with GitHub repository for remote collaboration and deployment
+│
+├── .gitignore → Git ignore patterns for node_modules and environment files
+│   **Detailed Purpose**: Prevents sensitive/unnecessary files from being committed to Git
+│   **Main Functions/Responsibilities**: Excludes node_modules, .env files, logs, temporary files
+│   **When to Edit**: When adding new file types to ignore, new dependencies, or security concerns
+│   **Connections**: Affects what gets committed to Git repository
+│
+├── .htaccess → Apache server configuration for URL rewriting and security
+│   **Detailed Purpose**: Apache server configuration for URL rewriting, security headers, and routing
+│   **Main Functions/Responsibilities**: Handles URL routing, security headers, redirects, caching rules
+│   **When to Edit**: When changing server routing, adding security headers, or modifying URL structure
+│   **Connections**: Works with Apache server to handle incoming HTTP requests
+│
+├── README.md → Project overview and setup instructions
+│   **Detailed Purpose**: Main project documentation and setup guide for developers
+│   **Main Functions/Responsibilities**: Explains project purpose, installation steps, usage examples
+│   **When to Edit**: When adding new features, changing setup requirements, or updating project info
+│   **Connections**: Referenced by developers, GitHub, and deployment scripts
+│
+├── PROJECT_STRUCTURE.md → High-level project architecture documentation
+│   **Detailed Purpose**: Documents the overall system architecture and design patterns
+│   **Main Functions/Responsibilities**: Explains MVC structure, file organization, design decisions
+│   **When to Edit**: When changing architecture, adding new patterns, or restructuring code
+│   **Connections**: Guides developers on how to organize new code and features
+│
+├── IMPLEMENTATION_SUMMARY.md → Detailed implementation status and features
+│   **Detailed Purpose**: Tracks what features are implemented vs. planned
+│   **Main Functions/Responsibilities**: Status tracking, feature completion, development roadmap
+│   **When to Edit**: After completing features, when updating project status, or planning new work
+│   **Connections**: Used by project managers and developers to track progress
+│
+├── UI_BACKEND_CONNECTIONS.md → Frontend-backend integration documentation
+│   **Detailed Purpose**: Documents how frontend components connect to backend APIs
+│   **Main Functions/Responsibilities**: API endpoint mapping, data flow documentation, integration examples
+│   **When to Edit**: When adding new APIs, changing data structures, or updating integration logic
+│   **Connections**: Links frontend JavaScript functions to backend PHP/Node.js endpoints
+│
+├── UI_INTEGRATION_SUMMARY.md → UI component connection status
+│   **Detailed Purpose**: Tracks which UI components are connected to backend functionality
+│   **Main Functions/Responsibilities**: Component status tracking, integration completion status
+│   **When to Edit**: When connecting new components, fixing broken connections, or updating status
+│   **Connections**: Shows relationship between HTML elements and JavaScript functionality
+│
+├── BACKEND_IMPLEMENTATION.md → Backend development progress and architecture
+│   **Detailed Purpose**: Documents backend API development status and architecture decisions
+│   **Main Functions/Responsibilities**: API documentation, backend progress tracking, architecture notes
+│   **When to Edit**: When adding new APIs, changing backend structure, or updating documentation
+│   **Connections**: Documents how backend APIs support frontend functionality
+│
+├── SUPABASE_STORAGE_GUIDE.md → Supabase integration and storage setup guide
+│   **Detailed Purpose**: Guide for setting up and using Supabase database and storage
+│   **Main Functions/Responsibilities**: Database setup, storage configuration, integration examples
+│   **When to Edit**: When changing database schema, adding new storage features, or updating config
+│   **Connections**: Links backend code to Supabase database and storage services
+│
+├── AUTH_PROFILE_REPORT.txt → Authentication and profile system implementation report
+│   **Detailed Purpose**: Documents authentication system implementation and user profile features
+│   **Main Functions/Responsibilities**: Auth system status, profile feature documentation, security notes
+│   **When to Edit**: When updating auth logic, adding profile features, or fixing security issues
+│   **Connections**: Documents how login/register/profile systems work together
+│
+├── NAVIGATION_ANIMATIONS_REPORT.txt → Navigation styling and animation implementation report
+│   **Detailed Purpose**: Documents navigation system styling and animation implementations
+│   **Main Functions/Responsibilities**: Navigation status, animation details, styling documentation
+│   **When to Edit**: When changing navigation design, adding animations, or updating styling
+│   **Connections**: Documents how navigation works across all pages
+│
+├── config.env.example → Environment configuration template for database and API keys
+│   **Detailed Purpose**: Template for environment variables needed to run the project
+│   **Main Functions/Responsibilities**: Shows required environment variables, API keys, database URLs
+│   **When to Edit**: When adding new environment variables, changing config structure, or updating keys
+│   **Connections**: Referenced by server.js and other backend files for configuration
+│
+├── server.js → Node.js Express server entry point with API routes and middleware
+│   **Detailed Purpose**: Main Node.js server that handles advanced API endpoints and middleware
+│   **Main Functions/Responsibilities**: Express server setup, API routing, middleware configuration, server startup
+│   **When to Edit**: When adding new API routes, changing server config, or adding middleware
+│   **Connections**: Integrates with PHP APIs, provides advanced features, handles complex requests
+│
+├── package.json → Node.js dependencies and project metadata
+│   **Detailed Purpose**: Defines Node.js project dependencies, scripts, and metadata
+│   **Main Functions/Responsibilities**: Dependency management, script definitions, project information
+│   **When to Edit**: When adding/removing npm packages, updating scripts, or changing project info
+│   **Connections**: Used by npm to install dependencies and run scripts
+│
+├── package-lock.json → Locked dependency versions for consistent builds
+│   **Detailed Purpose**: Locks exact versions of npm dependencies for reproducible builds
+│   **Main Functions/Responsibilities**: Version locking, dependency resolution, build consistency
+│   **When to Edit**: Automatically updated by npm install/update commands
+│   **Connections**: Ensures all developers use same dependency versions
+
+├── public/ → Frontend HTML pages and client-side assets
+│   ├── index.html → Main landing page with hero section and features
+│   │   **Detailed Purpose**: Entry point and main landing page for the TalentUp platform
+│   │   **Main Functions/Responsibilities**: Hero section, feature showcase, statistics display, navigation
+│   │   **When to Edit**: When changing main page content, adding features, updating statistics display
+│   │   **Connections**: Links to all other pages, displays stats from backend APIs, navigation system
+│   │
+│   ├── login.html → User authentication login form and logic
+│   │   **Detailed Purpose**: User authentication interface with login form and validation
+│   │   **Main Functions/Responsibilities**: Login form, validation, authentication logic, error handling
+│   │   **When to Edit**: When changing login UI, adding new auth methods, updating validation rules
+│   │   **Connections**: Connects to auth_login.php, handles user sessions, redirects after login
+│   │
+│   ├── register.html → User registration form with role selection
+│   │   **Detailed Purpose**: New user registration with role-based account creation
+│   │   **Main Functions/Responsibilities**: Registration form, role selection, validation, account creation
+│   │   **When to Edit**: When adding new user fields, changing roles, updating validation, UI changes
+│   │   **Connections**: Connects to auth_register.php, creates new users in database, handles roles
+│   │
+│   ├── dashboard_user.html → User dashboard with statistics and recent activity
+│   │   **Detailed Purpose**: Main user interface showing personal statistics and recent activities
+│   │   **Main Functions/Responsibilities**: User stats display, recent activity feed, quick actions
+│   │   **When to Edit**: When adding new dashboard features, changing stats display, updating layout
+│   │   **Connections**: Connects to user dashboard APIs, displays user-specific data, navigation system
+│   │
+│   ├── profile.html → User profile management with avatar and settings
+│   │   **Detailed Purpose**: User profile management interface for updating personal information
+│   │   **Main Functions/Responsibilities**: Profile editing, avatar upload, password changes, settings
+│   │   **When to Edit**: When adding profile fields, changing avatar handling, updating settings options
+│   │   **Connections**: Connects to profile_update.php, avatar_update.php, change_password.php
+│   │
+│   ├── admin_panel.html → Admin interface for user and content management
+│   │   **Detailed Purpose**: Administrative interface for managing users, content, and system settings
+│   │   **Main Functions/Responsibilities**: User management, content moderation, system statistics, role management
+│   │   **When to Edit**: When adding admin features, changing user management, updating admin controls
+│   │   **Connections**: Connects to admin APIs, user management functions, role assignment system
+│   │
+│   ├── judge_panel.html → Judge interface for video evaluation and scoring
+│   │   **Detailed Purpose**: Interface for judges to evaluate and score talent videos
+│   │   **Main Functions/Responsibilities**: Video evaluation, scoring system, feedback management, judge tools
+│   │   **When to Edit**: When changing scoring system, adding judge tools, updating evaluation interface
+│   │   **Connections**: Connects to judge APIs, video evaluation system, feedback management
+│   │
+│   ├── video_list.html → Video gallery with filtering and search
+│   │   **Detailed Purpose**: Main video browsing interface with search and filtering capabilities
+│   │   **Main Functions/Responsibilities**: Video display, search functionality, filtering, pagination
+│   │   **When to Edit**: When changing video display, adding filters, updating search functionality
+│   │   **Connections**: Connects to video APIs, search system, filtering logic, video detail pages
+│   │
+│   ├── video_detail.html → Individual video view with feedback and ratings
+│   │   **Detailed Purpose**: Detailed view of individual videos with user feedback and rating system
+│   │   **Main Functions/Responsibilities**: Video playback, feedback display, rating system, user interactions
+│   │   **When to Edit**: When changing video player, updating feedback system, modifying rating interface
+│   │   **Connections**: Connects to video APIs, feedback system, rating system, user interaction APIs
+│   │
+│   ├── debug-registration.html → Development testing for registration system
+│   │   **Detailed Purpose**: Development tool for testing registration functionality and debugging issues
+│   │   **Main Functions/Responsibilities**: Registration testing, error simulation, development debugging
+│   │   **When to Edit**: When testing registration changes, debugging issues, or adding test features
+│   │   **Connections**: Uses same registration logic as register.html, connects to auth_register.php
+│   │
+│   ├── test-registration.html → Registration functionality testing page
+│   │   **Detailed Purpose**: Alternative testing interface for registration system validation
+│   │   **Main Functions/Responsibilities**: Registration testing, form validation testing, edge case testing
+│   │   **When to Edit**: When testing registration changes, validating new features, or debugging
+│   │   **Connections**: Uses registration APIs, form validation, error handling systems
+│   │
+│   ├── test-supabase.html → Supabase integration testing interface
+│   │   **Detailed Purpose**: Development tool for testing Supabase database and storage integration
+│   │   **Main Functions/Responsibilities**: Database connection testing, storage testing, API validation
+│   │   **When to Edit**: When testing database changes, validating storage, or debugging Supabase issues
+│   │   **Connections**: Tests Supabase client, database operations, storage operations
+│   │
+│   └── js/ → Client-side JavaScript modules
+│       ├── supabase-config.js → Supabase client configuration and connection
+│       │   **Detailed Purpose**: Configuration file for Supabase client connection and setup
+│       │   **Main Functions/Responsibilities**: Supabase client initialization, connection management, config
+│       │   **When to Edit**: When changing Supabase settings, adding new services, or updating config
+│       │   **Connections**: Used by all pages that need Supabase access, database operations
+│       │
+│       ├── backend-integration.js → API integration and data handling
+│       │   **Detailed Purpose**: Centralized JavaScript for handling backend API communications
+│       │   **Main Functions/Responsibilities**: API calls, data handling, error management, response processing
+│       │   **When to Edit**: When adding new APIs, changing data handling, or updating error management
+│       │   **Connections**: Used by all HTML pages, connects to PHP and Node.js backend APIs
+│       │
+│       ├── language-fixes.js → Multi-language support and localization
+│       │   **Detailed Purpose**: Handles multi-language support and text localization across the platform
+│       │   **Main Functions/Responsibilities**: Language switching, text translation, locale management
+│       │   **When to Edit**: When adding new languages, updating translations, or changing locale handling
+│       │   **Connections**: Used by all pages, connects to language JSON files, navigation system
+│       │
+│       ├── responsive-fixes.js → Mobile responsiveness and layout adjustments
+│       │   **Detailed Purpose**: Handles responsive design and mobile layout adjustments
+│       │   **Main Functions/Responsibilities**: Mobile detection, layout adjustments, responsive behavior
+│       │   **When to Edit**: When fixing mobile issues, updating responsive behavior, or changing layouts
+│       │   **Connections**: Used by all pages, CSS media queries, mobile navigation system
+│       │
+│       ├── header-sync.js → Navigation synchronization across pages
+│       │   **Detailed Purpose**: Ensures navigation consistency and synchronization across all pages
+│       │   **Main Functions/Responsibilities**: Navigation state management, user role display, active page highlighting
+│       │   **When to Edit**: When changing navigation structure, adding new nav items, or updating nav logic
+│       │   **Connections**: Used by all pages, navigation system, user authentication system
+│       │
+│       ├── judge-fixes.js → Judge panel functionality and interactions
+│       │   **Detailed Purpose**: Specific JavaScript functionality for judge panel operations
+│       │   **Main Functions/Responsibilities**: Judge-specific features, video evaluation tools, scoring system
+│       │   **When to Edit**: When updating judge features, changing evaluation system, or adding judge tools
+│       │   **Connections**: Used by judge_panel.html, judge APIs, video evaluation system
+│       │
+│       └── admin-fixes.js → Admin panel features and user management
+│           **Detailed Purpose**: JavaScript functionality specific to admin panel operations
+│           **Main Functions/Responsibilities**: Admin features, user management tools, system administration
+│           **When to Edit**: When updating admin features, changing user management, or adding admin tools
+│           **Connections**: Used by admin_panel.html, admin APIs, user management system
+
+├── php_api/ → PHP backend API endpoints
+│   ├── auth_login.php → User authentication and session management
+│   │   **Detailed Purpose**: Handles user login authentication and creates secure sessions
+│   │   **Main Functions/Responsibilities**: User validation, password verification, session creation, security checks
+│   │   **When to Edit**: When changing authentication logic, adding security features, or updating session handling
+│   │   **Connections**: Called by login.html, connects to database, creates user sessions, security system
+│   │
+│   ├── auth_register.php → User registration and account creation
+│   │   **Detailed Purpose**: Processes new user registration and creates user accounts in the system
+│   │   **Main Functions/Responsibilities**: User data validation, account creation, role assignment, duplicate checking
+│   │   **When to Edit**: When adding new user fields, changing validation rules, or updating account creation logic
+│   │   **Connections**: Called by register.html, connects to database, user management system, role system
+│   │
+│   ├── auth_logout.php → User logout and session termination
+│   │   **Detailed Purpose**: Securely terminates user sessions and logs users out of the system
+│   │   **Main Functions/Responsibilities**: Session destruction, cleanup, security logging, redirect handling
+│   │   **When to Edit**: When changing logout behavior, adding security logging, or updating session cleanup
+│   │   **Connections**: Called by logout buttons, session management system, security system
+│   │
+│   ├── profile_update.php → Profile information and avatar updates
+│   │   **Detailed Purpose**: Handles user profile information updates and modifications
+│   │   **Main Functions/Responsibilities**: Profile data validation, database updates, avatar handling, change logging
+│   │   **When to Edit**: When adding profile fields, changing validation, or updating avatar handling
+│   │   **Connections**: Called by profile.html, connects to database, avatar storage system, user data
+│   │
+│   ├── upload_video.php → Video file upload and metadata storage
+│   │   **Detailed Purpose**: Processes video file uploads and stores video metadata in the system
+│   │   **Main Functions/Responsibilities**: File validation, upload processing, metadata storage, storage management
+│   │   **When to Edit**: When changing upload requirements, adding file types, or updating storage logic
+│   │   **Connections**: Called by video upload forms, connects to storage system, database, video management
+│   │
+│   ├── post_feedback.php → User feedback and rating submission
+│   │   **Detailed Purpose**: Handles user feedback and rating submissions for videos
+│   │   **Main Functions/Responsibilities**: Feedback validation, rating processing, database storage, moderation
+│   │   **When to Edit**: When changing feedback system, adding rating types, or updating moderation rules
+│   │   **Connections**: Called by video_detail.html, connects to database, feedback system, rating system
+│   │
+│   ├── aggregate_feedback.php → Feedback statistics and aggregation
+│   │   **Detailed Purpose**: Aggregates and calculates feedback statistics for videos and users
+│   │   **Main Functions/Responsibilities**: Statistics calculation, data aggregation, performance optimization, reporting
+│   │   **When to Edit**: When changing statistics calculations, adding new metrics, or optimizing performance
+│   │   **Connections**: Called by dashboard pages, connects to database, feedback system, statistics display
+│   │
+│   └── logout.php → Alternative logout endpoint for compatibility
+│       **Detailed Purpose**: Alternative logout endpoint for backward compatibility and different logout methods
+│       **Main Functions/Responsibilities**: Session termination, cleanup, redirect handling, compatibility
+│       **When to Edit**: When changing logout behavior, adding compatibility features, or updating redirects
+│       **Connections**: Alternative logout method, session management, security system
+
+├── controllers/ → PHP controller classes for business logic
+│   ├── AuthController.php → Authentication and user session management
+│   │   **Detailed Purpose**: Centralized authentication logic and user session management
+│   │   **Main Functions/Responsibilities**: Login/logout logic, session handling, user validation, security checks
+│   │   **When to Edit**: When changing authentication flow, adding security features, or updating session logic
+│   │   **Connections**: Used by auth_login.php, auth_register.php, auth_logout.php, session system
+│   │
+│   ├── AdminController.php → Admin operations and user role management
+│   │   **Detailed Purpose**: Handles administrative operations and user role management
+│   │   **Main Functions/Responsibilities**: User role assignment, admin operations, system management, role validation
+│   │   **When to Edit**: When adding admin features, changing role logic, or updating admin operations
+│   │   **Connections**: Used by admin_panel.html, admin APIs, user management system, role system
+│   │
+│   └── VideoController.php → Video processing and management operations
+│       **Detailed Purpose**: Manages video processing, storage, and metadata operations
+│       **Main Functions/Responsibilities**: Video upload processing, metadata management, storage operations, video CRUD
+│       **When to Edit**: When changing video handling, adding video features, or updating storage logic
+│       **Connections**: Used by upload_video.php, video management APIs, storage system, database
+
+├── models/ → PHP data models for database interactions
+│   ├── UserModel.php → User data and authentication operations
+│   │   **Detailed Purpose**: Data model for user information and authentication operations
+│   │   **Main Functions/Responsibilities**: User CRUD operations, authentication data, profile management, role handling
+│   │   **When to Edit**: When changing user data structure, adding user fields, or updating authentication logic
+│   │   **Connections**: Used by AuthController, user APIs, profile system, database operations
+│   │
+│   ├── VideoModel.php → Video metadata and file management
+│   │   **Detailed Purpose**: Data model for video information and file management operations
+│   │   **Main Functions/Responsibilities**: Video CRUD operations, metadata management, file operations, storage handling
+│   │   **When to Edit**: When changing video data structure, adding video fields, or updating file handling
+│   │   **Connections**: Used by VideoController, video APIs, storage system, database operations
+│   │
+│   ├── FeedbackModel.php → User feedback and rating data
+│   │   **Detailed Purpose**: Data model for user feedback and rating information
+│   │   **Main Functions/Responsibilities**: Feedback CRUD operations, rating calculations, moderation, statistics
+│   │   **When to Edit**: When changing feedback structure, adding rating types, or updating moderation logic
+│   │   **Connections**: Used by feedback APIs, rating system, moderation system, database operations
+│   │
+│   ├── LikeModel.php → Video like/dislike functionality
+│   │   **Detailed Purpose**: Data model for video like/dislike functionality and user interactions
+│   │   **Main Functions/Responsibilities**: Like/dislike operations, user interaction tracking, statistics, moderation
+│   │   **When to Edit**: When changing like system, adding interaction types, or updating tracking logic
+│   │   **Connections**: Used by video APIs, user interaction system, statistics system, database operations
+│   │
+│   └── CompetitionModel.php → Competition and contest management
+│       **Detailed Purpose**: Data model for competition and contest management operations
+│       **Main Functions/Responsibilities**: Competition CRUD operations, contest management, participant tracking, results
+│       **When to Edit**: When changing competition structure, adding contest features, or updating management logic
+│       **Connections**: Used by competition APIs, contest system, participant system, database operations
+
+├── src/ → Node.js source code and server components
+│   ├── config.js → Server configuration and environment variables
+│   │   **Detailed Purpose**: Centralized configuration management for Node.js server
+│   │   **Main Functions/Responsibilities**: Environment variables, server settings, database config, API keys
+│   │   **When to Edit**: When changing server settings, adding new config options, or updating environment variables
+│   │   **Connections**: Used by server.js, all controllers, middleware, and services
+│   │
+│   ├── controllers/ → Node.js controller classes
+│   │   ├── AuthController.js → JWT authentication and user management
+│   │   │   **Detailed Purpose**: JWT-based authentication and advanced user management for Node.js
+│   │   │   **Main Functions/Responsibilities**: JWT token handling, user authentication, session management, security
+│   │   │   **When to Edit**: When changing JWT logic, adding auth features, or updating security measures
+│   │   │   **Connections**: Used by auth middleware, user APIs, JWT system, security system
+│   │   │
+│   │   ├── AdminController.js → Admin operations with role validation
+│   │   │   **Detailed Purpose**: Advanced admin operations with role-based access control
+│   │   │   **Main Functions/Responsibilities**: Admin operations, role validation, system management, user administration
+│   │   │   **When to Edit**: When adding admin features, changing role logic, or updating admin operations
+│   │   │   **Connections**: Used by admin APIs, role system, user management, middleware
+│   │   │
+│   │   ├── FeedbackController.js → Feedback processing and aggregation
+│   │   │   **Detailed Purpose**: Advanced feedback processing and statistical aggregation
+│   │   │   **Main Functions/Responsibilities**: Feedback processing, statistics calculation, data aggregation, reporting
+│   │   │   **When to Edit**: When changing feedback logic, adding statistics, or updating aggregation methods
+│   │   │   **Connections**: Used by feedback APIs, statistics system, database, reporting system
+│   │   │
+│   │   └── VideoController.js → Video upload and management
+│   │       **Detailed Purpose**: Advanced video management and processing operations
+│   │       **Main Functions/Responsibilities**: Video processing, metadata management, storage operations, video CRUD
+│   │       **When to Edit**: When changing video handling, adding processing features, or updating storage logic
+│   │       **Connections**: Used by video APIs, storage system, processing system, database
+│   │
+│   ├── middleware/ → Express middleware functions
+│   │   ├── auth.js → Authentication and session validation
+│   │   │   **Detailed Purpose**: Express middleware for authentication and session validation
+│   │   │   **Main Functions/Responsibilities**: Request authentication, session validation, security checks, user verification
+│   │   │   **When to Edit**: When changing auth logic, adding security features, or updating validation rules
+│   │   │   **Connections**: Used by all protected routes, auth system, security system
+│   │   │
+│   │   ├── csrf.js → Cross-site request forgery protection
+│   │   │   **Detailed Purpose**: CSRF protection middleware for security
+│   │   │   **Main Functions/Responsibilities**: CSRF token validation, security protection, request verification
+│   │   │   **When to Edit**: When changing CSRF logic, adding security features, or updating protection methods
+│   │   │   **Connections**: Used by form submissions, security system, token system
+│   │   │
+│   │   └── roleCheck.js → Role-based access control middleware
+│   │       **Detailed Purpose**: Middleware for role-based access control and permissions
+│   │       **Main Functions/Responsibilities**: Role validation, permission checking, access control, security enforcement
+│   │       **When to Edit**: When changing role logic, adding permissions, or updating access control
+│   │       **Connections**: Used by protected routes, role system, permission system, security system
+│   │
+│   ├── models/ → Data models for Supabase integration
+│   │   ├── UserModel.js → User operations and role management
+│   │   │   **Detailed Purpose**: Supabase-based user data model and operations
+│   │   │   **Main Functions/Responsibilities**: User CRUD operations, role management, Supabase integration, data validation
+│   │   │   **When to Edit**: When changing user structure, adding Supabase features, or updating data logic
+│   │   │   **Connections**: Used by UserController, Supabase database, role system, auth system
+│   │   │
+│   │   ├── VideoModel.js → Video data and storage operations
+│   │   │   **Detailed Purpose**: Supabase-based video data model and storage operations
+│   │   │   **Main Functions/Responsibilities**: Video CRUD operations, storage management, metadata handling, Supabase integration
+│   │   │   **When to Edit**: When changing video structure, adding storage features, or updating data logic
+│   │   │   **Connections**: Used by VideoController, Supabase storage, database, metadata system
+│   │   │
+│   │   ├── FeedbackModel.js → Feedback and rating operations
+│   │   │   **Detailed Purpose**: Supabase-based feedback data model and operations
+│   │   │   **Main Functions/Responsibilities**: Feedback CRUD operations, rating calculations, moderation, Supabase integration
+│   │   │   **When to Edit**: When changing feedback structure, adding rating features, or updating data logic
+│   │   │   **Connections**: Used by FeedbackController, Supabase database, rating system, moderation system
+│   │   │
+│   │   ├── LikeModel.js → Like/dislike functionality
+│   │   │   **Detailed Purpose**: Supabase-based like/dislike data model and operations
+│   │   │   **Main Functions/Responsibilities**: Like/dislike operations, user interaction tracking, statistics, Supabase integration
+│   │   │   **When to Edit**: When changing like system, adding interaction features, or updating data logic
+│   │   │   **Connections**: Used by video APIs, Supabase database, interaction system, statistics system
+│   │   │
+│   │   ├── CompetitionModel.js → Competition management
+│   │   │   **Detailed Purpose**: Supabase-based competition data model and operations
+│   │   │   **Main Functions/Responsibilities**: Competition CRUD operations, contest management, participant tracking, Supabase integration
+│   │   │   **When to Edit**: When changing competition structure, adding contest features, or updating data logic
+│   │   │   **Connections**: Used by competition APIs, Supabase database, contest system, participant system
+│   │   │
+│   │   └── FeedbackSummaryModel.js → Aggregated feedback statistics
+│   │       **Detailed Purpose**: Supabase-based feedback summary and statistics model
+│   │       **Main Functions/Responsibilities**: Statistics aggregation, data summarization, performance optimization, Supabase integration
+│   │       **When to Edit**: When changing statistics logic, adding new metrics, or updating aggregation methods
+│   │       **Connections**: Used by FeedbackController, Supabase database, statistics system, reporting system
+│   │
+│   ├── services/ → External service integrations
+│   │   └── SupabaseService.js → Supabase database and storage service
+│   │       **Detailed Purpose**: Centralized service for Supabase database and storage operations
+│   │       **Main Functions/Responsibilities**: Database connections, storage operations, query management, error handling
+│   │       **When to Edit**: When changing Supabase config, adding new services, or updating connection logic
+│   │       **Connections**: Used by all models, database operations, storage operations, error handling
+│   │
+│   └── jobs/ → Background job processing
+│       └── aggregate_feedback.js → Automated feedback aggregation
+│           **Detailed Purpose**: Background job for automated feedback statistics aggregation
+│           **Main Functions/Responsibilities**: Scheduled aggregation, performance optimization, data processing, reporting
+│           **When to Edit**: When changing aggregation logic, adding new jobs, or updating scheduling
+│           **Connections**: Used by cron jobs, database system, statistics system, reporting system
+
+├── supabase/ → Database schema and migration files
+│   └── migrations/ → SQL migration scripts
+│       ├── 20250826164842_bronze_desert.sql → Initial database schema setup
+│       │   **Detailed Purpose**: Initial database schema creation and table structure setup
+│       │   **Main Functions/Responsibilities**: Database initialization, table creation, basic schema setup
+│       │   **When to Edit**: When changing initial database structure, adding new tables, or updating schema
+│       │   **Connections**: Database initialization, schema management, table creation
+│       │
+│       ├── 20250826164944_curly_stream.sql → User and authentication tables
+│       │   **Detailed Purpose**: User and authentication system database tables and relationships
+│       │   **Main Functions/Responsibilities**: User tables, auth tables, role tables, relationship setup
+│       │   **When to Edit**: When changing user structure, adding auth features, or updating role system
+│       │   **Connections**: User system, authentication system, role system, database
+│       │
+│       └── 20250826165828_lively_oasis.sql → Video and feedback tables
+│           **Detailed Purpose**: Video management and feedback system database tables
+│           **Main Functions/Responsibilities**: Video tables, feedback tables, rating tables, relationship setup
+│           **When to Edit**: When changing video structure, adding feedback features, or updating rating system
+│           **Connections**: Video system, feedback system, rating system, database
+│
+├── assets/ → Static assets and media files
+│   └── images/ → Image assets and media
+│       └── manifest.txt → Asset manifest and metadata
+│           **Detailed Purpose**: Tracks and manages static assets and media files
+│           **Main Functions/Responsibilities**: Asset tracking, file management, metadata storage, version control
+│           **When to Edit**: When adding new assets, updating file information, or changing asset structure
+│           **Connections**: Asset management, file system, media handling, frontend display
+│
+├── lang/ → Multi-language support files
+│   ├── en.json → English language strings and translations
+│   │   **Detailed Purpose**: English language strings and text content for the platform
+│   │   **Main Functions/Responsibilities**: English text content, UI strings, error messages, help text
+│   │   **When to Edit**: When updating English text, adding new content, or changing UI language
+│   │   **Connections**: Language system, UI display, text rendering, localization
+│   │
+│   ├── si.json → Sinhala language strings and translations
+│   │   **Detailed Purpose**: Sinhala language strings and text content for the platform
+│   │   **Main Functions/Responsibilities**: Sinhala text content, UI strings, error messages, help text
+│   │   **When to Edit**: When updating Sinhala text, adding new content, or changing UI language
+│   │   **Connections**: Language system, UI display, text rendering, localization
+│   │
+│   └── ta.json → Tamil language strings and translations
+│       **Detailed Purpose**: Tamil language strings and text content for the platform
+│       **Main Functions/Responsibilities**: Tamil text content, UI strings, error messages, help text
+│       **When to Edit**: When updating Tamil text, adding new content, or changing UI language
+│       **Connections**: Language system, UI display, text rendering, localization
+│
+├── scripts/ → Utility and automation scripts
+│   └── download_assets.sh → Asset download and setup automation
+│       **Detailed Purpose**: Automated script for downloading and setting up project assets
+│       **Main Functions/Responsibilities**: Asset automation, setup automation, deployment assistance, maintenance
+│       **When to Edit**: When changing asset sources, updating automation logic, or adding new setup steps
+│       **Connections**: Asset management, deployment system, automation system, setup process
+│
+├── config/ → Configuration files and settings
+│   **Detailed Purpose**: Additional configuration files and project settings
+│   **Main Functions/Responsibilities**: Configuration management, settings storage, project configuration
+│   **When to Edit**: When adding new config options, changing settings, or updating project configuration
+│   **Connections**: Configuration system, settings management, project setup
+│
+├── data/ → Data storage and cache files
+│   **Detailed Purpose**: Local data storage and caching for the application
+│   **Main Functions/Responsibilities**: Data caching, local storage, temporary data, performance optimization
+│   **When to Edit**: When changing cache strategy, updating storage methods, or optimizing performance
+│   **Connections**: Cache system, storage system, performance optimization, data management
+│
+├── api/ → Additional API endpoints and routes
+│   **Detailed Purpose**: Additional API endpoints and routing configurations
+│   **Main Functions/Responsibilities**: API routing, endpoint management, route configuration, API organization
+│   **When to Edit**: When adding new APIs, changing routing, or updating endpoint configuration
+│   **Connections**: API system, routing system, endpoint management, backend integration
+│
+└── node_modules/ → Node.js dependencies and packages
+    **Detailed Purpose**: Contains all installed Node.js packages and dependencies
+    **Main Functions/Responsibilities**: Package storage, dependency management, module availability, version control
+    **When to Edit**: Never edit directly - use npm commands (install, update, remove)
+    **Connections**: Package management, dependency resolution, module system, npm ecosystem
+
+TECHNICAL ARCHITECTURE
+======================
+Frontend: Vanilla JavaScript, HTML5, CSS3 with responsive design
+Backend: PHP APIs for authentication, Node.js/Express for advanced features
+Database: Supabase (PostgreSQL) with real-time subscriptions
+Storage: Supabase Storage for video and image files
+Authentication: JWT tokens, PHP sessions, role-based access control
+Security: CSRF protection, input validation, prepared statements
+Deployment: Apache server with .htaccess configuration
+
+FEATURE → FILE WORKFLOW MAP
+===========================
+
+1. USER REGISTRATION WORKFLOW
+   ├── register.html → User fills registration form
+   ├── JavaScript validation → Client-side validation
+   ├── auth_register.php → Backend registration processing
+   ├── UserModel.php → User data model operations
+   ├── Database → User account creation
+   └── Redirect → login.html or dashboard
+
+2. USER LOGIN WORKFLOW
+   ├── login.html → User enters credentials
+   ├── JavaScript validation → Client-side validation
+   ├── auth_login.php → Backend authentication
+   ├── AuthController.php → Authentication logic
+   ├── Session creation → PHP session management
+   └── Redirect → dashboard or role-based page
+
+3. USER LOGOUT WORKFLOW
+   ├── Logout button → User clicks logout
+   ├── logout() function → JavaScript logout handler
+   ├── auth_logout.php → Backend session termination
+   ├── Session destruction → Clean session cleanup
+   └── Redirect → login.html
+
+4. PROFILE MANAGEMENT WORKFLOW
+   ├── profile.html → User accesses profile page
+   ├── Profile data loading → Load current user data
+   ├── Profile editing → User modifies information
+   ├── profile_update.php → Backend profile updates
+   ├── Database update → Save profile changes
+   └── UI refresh → Display updated information
+
+5. VIDEO UPLOAD WORKFLOW
+   ├── Upload form → User selects video file
+   ├── File validation → Client-side file checks
+   ├── upload_video.php → Backend upload processing
+   ├── VideoModel.php → Video data operations
+   ├── Supabase Storage → File storage
+   └── Database update → Video metadata storage
+
+6. VIDEO VIEWING WORKFLOW
+   ├── video_list.html → User browses videos
+   ├── Video loading → Load video list from API
+   ├── Filtering/Search → User applies filters
+   ├── Video display → Show filtered results
+   ├── video_detail.html → Individual video view
+   └── Video playback → Display video content
+
+7. FEEDBACK SYSTEM WORKFLOW
+   ├── Video detail page → User views video
+   ├── Feedback form → User submits feedback
+   ├── post_feedback.php → Backend feedback processing
+   ├── FeedbackModel.php → Feedback data operations
+   ├── Database storage → Save feedback data
+   └── Statistics update → Update video ratings
+
+8. ADMIN PANEL WORKFLOW
+   ├── admin_panel.html → Admin accesses panel
+   ├── Role verification → Check admin permissions
+   ├── Admin APIs → Load admin data
+   ├── User management → Admin manages users
+   ├── Content moderation → Admin moderates content
+   └── System settings → Admin configures system
+
+9. JUDGE PANEL WORKFLOW
+   ├── judge_panel.html → Judge accesses panel
+   ├── Role verification → Check judge permissions
+   ├── Video evaluation → Judge reviews videos
+   ├── Scoring system → Judge assigns scores
+   ├── Feedback aggregation → System aggregates scores
+   └── Results display → Show evaluation results
+
+FILE INTERCONNECTION EXPLANATION
+================================
+
+FRONTEND → BACKEND → DATABASE FLOW:
+
+1. HTML Pages (public/*.html)
+   ├── Contains UI elements and forms
+   ├── Includes JavaScript for interactivity
+   ├── Makes API calls to backend endpoints
+   └── Displays data received from backend
+
+2. JavaScript Files (public/js/*.js)
+   ├── Handles user interactions
+   ├── Makes AJAX/fetch requests to APIs
+   ├── Processes API responses
+   └── Updates UI based on data
+
+3. PHP API Endpoints (php_api/*.php)
+   ├── Receives HTTP requests from frontend
+   ├── Processes business logic
+   ├── Interacts with database through models
+   └── Returns JSON responses to frontend
+
+4. Node.js Server (src/*.js)
+   ├── Handles advanced API operations
+   ├── Provides real-time features
+   ├── Integrates with Supabase services
+   └── Manages background jobs
+
+5. Database Layer (Supabase)
+   ├── Stores all application data
+   ├── Provides real-time subscriptions
+   ├── Handles file storage
+   └── Manages user authentication
+
+COMMON MODIFICATION CASES
+=========================
+
+1. ADDING NEW USER FIELD
+   ├── Edit: register.html (add form field)
+   ├── Edit: profile.html (add display/editing)
+   ├── Edit: UserModel.php (add field to model)
+   ├── Edit: Database migration (add column)
+   ├── Edit: auth_register.php (handle new field)
+   └── Test: Registration and profile update
+
+2. ADDING NEW VIDEO FEATURE
+   ├── Edit: video_list.html (add feature display)
+   ├── Edit: video_detail.html (add feature interface)
+   ├── Edit: VideoModel.php (add feature logic)
+   ├── Edit: Database migration (add feature fields)
+   ├── Edit: upload_video.php (handle new feature)
+   └── Test: Video upload and display
+
+3. CHANGING AUTHENTICATION LOGIC
+   ├── Edit: AuthController.php (update auth logic)
+   ├── Edit: auth_login.php (update login process)
+   ├── Edit: auth_register.php (update registration)
+   ├── Edit: middleware/auth.js (update validation)
+   ├── Edit: login.html (update UI if needed)
+   └── Test: Login/logout functionality
+
+4. ADDING NEW ADMIN FEATURE
+   ├── Edit: admin_panel.html (add feature UI)
+   ├── Edit: AdminController.php (add feature logic)
+   ├── Edit: admin-fixes.js (add frontend logic)
+   ├── Edit: Database (add required tables/fields)
+   ├── Edit: roleCheck.js (update permissions)
+   └── Test: Admin functionality and permissions
+
+ERROR FIXING GUIDE
+==================
+
+COMMON ERRORS → FILES → FIXES:
+
+1. "Cannot read properties of null" Error
+   ├── Files: Any HTML page with JavaScript
+   ├── Cause: DOM element not found when accessed
+   ├── Fix: Add null checks before accessing elements
+   ├── Example: if (element) { element.style.display = 'none'; }
+   └── Prevention: Always check element existence
+
+2. "Function is not defined" Error
+   ├── Files: HTML pages calling undefined functions
+   ├── Cause: Function not defined or not loaded
+   ├── Fix: Define missing function or check script loading
+   ├── Example: function missingFunction() { /* logic */ }
+   └── Prevention: Ensure all functions are defined
+
+3. "API endpoint not found" Error
+   ├── Files: JavaScript making API calls
+   ├── Cause: Incorrect API URL or missing endpoint
+   ├── Fix: Check API URL and ensure endpoint exists
+   ├── Example: fetch('/api/correct-endpoint')
+   └── Prevention: Use consistent API URL structure
+
+4. "Database connection failed" Error
+   ├── Files: PHP/Node.js backend files
+   ├── Cause: Incorrect database credentials or connection
+   ├── Fix: Check database config and connection settings
+   ├── Example: Verify Supabase credentials in config
+   └── Prevention: Use environment variables for sensitive data
+
+5. "Session expired" Error
+   ├── Files: Authentication-related files
+   ├── Cause: Session timeout or invalid session
+   ├── Fix: Implement proper session handling and refresh
+   ├── Example: Check session validity before operations
+   └── Prevention: Implement proper session management
+
+DEVELOPER WORKFLOW
+==================
+
+SAFE BRANCHING, EDITING, AND TESTING:
+
+1. PREPARATION PHASE
+   ├── Create feature branch: git checkout -b feature-name
+   ├── Update local code: git pull origin main
+   ├── Check current status: git status
+   └── Ensure clean working directory
+
+2. DEVELOPMENT PHASE
+   ├── Make incremental changes
+   ├── Test each change immediately
+   ├── Commit frequently: git commit -m "description"
+   └── Keep commits focused and descriptive
+
+3. TESTING PHASE
+   ├── Test functionality locally
+   ├── Check for console errors
+   ├── Verify API endpoints work
+   ├── Test different user roles
+   └── Validate database operations
+
+4. COMMIT PHASE
+   ├── Review changes: git diff
+   ├── Stage changes: git add .
+   ├── Commit with message: git commit -m "description"
+   └── Push to remote: git push origin feature-name
+
+5. MERGE PHASE
+   ├── Create pull request
+   ├── Review code changes
+   ├── Run automated tests
+   ├── Merge to main branch
+   └── Delete feature branch
+
+ACCEPTANCE CHECKLIST
+===================
+
+WHAT TO CONFIRM AFTER CHANGES:
+
+1. FUNCTIONALITY VERIFICATION
+   ├── Feature works as expected
+   ├── No console errors
+   ├── API endpoints respond correctly
+   ├── Database operations succeed
+   └── User experience is smooth
+
+2. SECURITY VERIFICATION
+   ├── Authentication still works
+   ├── Role-based access control functions
+   ├── No SQL injection vulnerabilities
+   ├── CSRF protection active
+   └── Input validation working
+
+3. PERFORMANCE VERIFICATION
+   ├── Page load times acceptable
+   ├── API response times reasonable
+   ├── Database queries optimized
+   ├── No memory leaks
+   └── Resource usage normal
+
+4. COMPATIBILITY VERIFICATION
+   ├── Works on different browsers
+   ├── Mobile responsive design
+   ├── Different screen sizes supported
+   ├── Accessibility maintained
+   └── Cross-platform compatibility
+
+5. INTEGRATION VERIFICATION
+   ├── Frontend-backend integration works
+   ├── Database connections stable
+   ├── File uploads function
+   ├── Real-time features work
+   └── Error handling functions
+
+QUICK REFERENCE INDEX
+=====================
+
+FILE → PURPOSE → WHEN TO EDIT → RELATED FEATURES:
+
+├── index.html → Landing page → Content changes, new features → Home, navigation, stats
+├── login.html → User login → Auth changes, UI updates → Authentication, user access
+├── register.html → User registration → Registration changes, new fields → User creation, roles
+├── dashboard_user.html → User dashboard → Dashboard features, stats → User stats, activity
+├── profile.html → Profile management → Profile fields, avatar → User profiles, settings
+├── admin_panel.html → Admin interface → Admin features, user management → Administration, roles
+├── judge_panel.html → Judge interface → Scoring system, evaluation → Video evaluation, judging
+├── video_list.html → Video gallery → Video display, search → Video browsing, filtering
+├── video_detail.html → Video view → Video player, feedback → Video playback, ratings
+├── auth_login.php → Login backend → Auth logic, security → User authentication
+├── auth_register.php → Registration backend → Registration logic, validation → User creation
+├── profile_update.php → Profile backend → Profile logic, avatar → Profile management
+├── upload_video.php → Video upload → Upload logic, storage → Video management
+├── post_feedback.php → Feedback backend → Feedback logic, moderation → Rating system
+├── AuthController.php → Auth logic → Authentication flow → Login, logout, sessions
+├── AdminController.php → Admin logic → Admin operations → User management, roles
+├── VideoController.php → Video logic → Video operations → Video management, storage
+├── UserModel.php → User data → User structure, fields → User management, profiles
+├── VideoModel.php → Video data → Video structure, metadata → Video management, storage
+├── FeedbackModel.php → Feedback data → Feedback structure, ratings → Rating system, moderation
+├── server.js → Node.js server → Server config, APIs → Advanced features, real-time
+├── package.json → Dependencies → Package management → Node.js ecosystem
+├── .htaccess → Server config → URL routing, security → Apache server, routing
+└── config.env.example → Environment → Configuration, keys → Environment setup, deployment
+
+CHECKSUM
+========
+
+SHA256: [This will be calculated after file completion]
+
+Last Updated: [Current Date and Time]
+Documentation Version: 2.0
+Maintainer: Development Team

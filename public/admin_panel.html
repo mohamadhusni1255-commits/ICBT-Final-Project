@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="">
+    <title>Admin Panel - TalentUp Sri Lanka</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #f72585;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --error: #ef476f;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray-100: #e9ecef;
+            --gray-200: #dee2e6;
+            --gray-300: #ced4da;
+            --gray-400: #adb5bd;
+            --gray-500: #6c757d;
+            --gray-600: #495057;
+            --gray-700: #343a40;
+            --gray-800: #212529;
+            --border-radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf1 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(67, 97, 238, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .nav-links a.active {
+            background: var(--primary);
+            color: white;
+            clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%);
+        }
+
+        .nav-links a.active:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Button Animations and Shapes */
+        .btn {
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-block;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #118ab2 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(6, 214, 160, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #f8961e 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 209, 102, 0.3);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 209, 102, 0.4);
+        }
+
+        .btn-error {
+            background: linear-gradient(135deg, var(--error) 0%, #e63946 100%);
+            color: white;
+            box-shadow: 0 10px 20px rgba(239, 71, 111, 0.3);
+        }
+
+        .btn-error:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(239, 71, 111, 0.4);
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 5%;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            margin-top: 10px;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin: 10px 0;
+        }
+
+        .card-description {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            margin-top: auto;
+        }
+
+        .trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .trend.up {
+            color: var(--success);
+        }
+
+        .trend.down {
+            color: var(--error);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: white;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Tables */
+        .table-container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .table-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        th {
+            background: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: var(--gray-100);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status.active {
+            background: rgba(6, 214, 160, 0.1);
+            color: var(--success);
+        }
+
+        .status.pending {
+            background: rgba(255, 209, 102, 0.1);
+            color: var(--warning);
+        }
+
+        .status.inactive {
+            background: rgba(239, 71, 111, 0.1);
+            color: var(--error);
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn.view {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .action-btn.view:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn.edit {
+            background: rgba(255, 209, 102, 0.1);
+            color: var(--warning);
+        }
+
+        .action-btn.edit:hover {
+            background: var(--warning);
+            color: white;
+        }
+
+        .action-btn.delete {
+            background: rgba(239, 71, 111, 0.1);
+            color: var(--error);
+        }
+
+        .action-btn.delete:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        /* Forms */
+        .form-section {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Charts */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .user-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Navigation Link Animations */
+        .nav-links a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(67, 97, 238, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .nav-links a.active {
+            background: var(--primary);
+            color: white;
+            clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%);
+        }
+
+        .nav-links a.active:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo" data-lang="site_title">TalentUp Sri Lanka</a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="video_list.html"><i class="fas fa-play-circle"></i> Videos</a></li>
+                <li><a href="dashboard_user.html" id="dashboardBtn" style="display: none;"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="admin_panel.html" class="active" id="adminBtn"><i class="fas fa-cog"></i> Admin Panel</a></li>
+                <li><a href="judge_panel.html" id="judgeBtn" style="display: none;"><i class="fas fa-gavel"></i> Judge Panel</a></li>
+                <li><a href="profile.html" id="profileBtn" style="display: none;"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="login.html" id="loginBtn" style="display: none;"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="register.html" id="registerBtn" style="display: none;"><i class="fas fa-user-plus"></i> Register</a></li>
+                <li><a href="#" onclick="logout()" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="si">සිංහල</option>
+                    <option value="ta">தமிழ்</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <div class="page-header fade-in">
+            <div>
+                <h1 class="page-title">Admin Panel</h1>
+                <p class="page-subtitle">Manage users, videos, competitions, and system settings</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary"><i class="fas fa-plus"></i> Add New</button>
+            </div>
+        </div>
+
+        <div class="dashboard-cards fade-in">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i> 12%
+                    </div>
+                </div>
+                <h3 class="card-title">Total Users</h3>
+                <div class="card-value" id="statTotalUsers">0</div>
+                <p class="card-description">Registered users on the platform</p>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i> 8%
+                    </div>
+                </div>
+                <h3 class="card-title">Total Videos</h3>
+                <div class="card-value" id="statTotalVideos">0</div>
+                <p class="card-description">Videos uploaded by users</p>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i> 5%
+                    </div>
+                </div>
+                <h3 class="card-title">Active Competitions</h3>
+                <div class="card-value" id="statActiveCompetitions">0</div>
+                <p class="card-description">Ongoing competitions</p>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="trend down">
+                        <i class="fas fa-arrow-down"></i> 3%
+                    </div>
+                </div>
+                <h3 class="card-title">Avg. Rating</h3>
+                <div class="card-value" id="statAvgRating">0.0</div>
+                <p class="card-description">Average judge rating across all videos</p>
+            </div>
+        </div>
+
+        <div class="tabs fade-in">
+            <div class="tab-btn active">Users</div>
+            <div class="tab-btn">Videos</div>
+            <div class="tab-btn">Competitions</div>
+            <div class="tab-btn">Judges</div>
+            <div class="tab-btn">Settings</div>
+        </div>
+
+        <div class="table-container fade-in">
+            <div class="table-header">
+                <h3 class="table-title">User Management</h3>
+                <div class="table-actions">
+                    <input type="text" class="form-input" placeholder="Search users..." style="max-width: 250px;">
+                    <button class="btn btn-primary"><i class="fas fa-filter"></i> Filter</button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Joined</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- Users will be loaded dynamically from backend -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="charts-container fade-in">
+            <div class="chart-card">
+                <h3 class="chart-title">User Registrations</h3>
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-line" style="font-size: 2rem; margin-right: 10px;"></i>
+                    User Registration Chart
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3 class="chart-title">Video Uploads</h3>
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-bar" style="font-size: 2rem; margin-right: 10px;"></i>
+                    Video Uploads Chart
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section fade-in">
+            <h3 class="form-title">Add New User</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" placeholder="Enter full name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="Enter email address">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select class="form-select">
+                        <option value="">Select Role</option>
+                        <option value="user">User</option>
+                        <option value="judge">Judge</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="form-select">
+                        <option value="">Select Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-outline">Cancel</button>
+                <button class="btn btn-primary">Create User</button>
+            </div>
+        </div>
+
+        <section class="admin-section" id="superAdminSection" style="display: none;">
+            <h2><i class="fas fa-crown"></i> Super Admin Panel</h2>
+            <div class="admin-card">
+                <h3>Super Admin Controls</h3>
+                <p>Manage system-wide settings and user roles. Only super admins can access these controls.</p>
+                
+                <div class="form-group">
+                    <label for="superAdminUserSelect">Select User to Grant Super Admin Access:</label>
+                    <select id="superAdminUserSelect" class="form-control">
+                        <option value="">Select a user...</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-primary" onclick="grantSuperAdminAccess()">
+                    <i class="fas fa-crown"></i> Grant Super Admin Access
+                </button>
+                
+                <div id="superAdminMessage" class="message" style="display: none;"></div>
+            </div>
+        </section>
+
+        <section class="admin-section" id="judgeManagementSection" style="display: none;">
+            <h2><i class="fas fa-gavel"></i> Judge Panel Management</h2>
+            <div class="admin-card">
+                <h3>Allocate Judge Panel Access</h3>
+                <p>Grant judge panel access to qualified users. Only super admins can perform this action.</p>
+                
+                <div class="form-group">
+                    <label for="judgeUserSelect">Select User to Grant Judge Access:</label>
+                    <select id="judgeUserSelect" class="form-control">
+                        <option value="">Select a user...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="judgeRole">Judge Role:</label>
+                    <select id="judgeRole" class="form-control">
+                        <option value="judge">Judge</option>
+                        <option value="senior_judge">Senior Judge</option>
+                        <option value="head_judge">Head Judge</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-primary" onclick="grantJudgeAccess()">
+                    <i class="fas fa-user-plus"></i> Grant Judge Access
+                </button>
+                
+                <div id="judgeAccessMessage" class="message" style="display: none;"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Load content based on the tab
+                loadTabContent(this.textContent.toLowerCase());
+            });
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update navigation first
+            updateNavigation();
+            
+            // Check if user is authenticated and is admin
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                const user = JSON.parse(currentUser);
+                if (user.role !== 'admin' && user.role !== 'super_admin') {
+                    window.location.href = 'dashboard_user.html';
+                    return;
+                }
+                
+                // Load admin statistics
+                loadAdminStats();
+                loadAdminUsers();
+                
+                // Show super admin specific features
+                if (user.role === 'super_admin') {
+                    showSuperAdminFeatures();
+                }
+                
+                // Populate user select dropdowns
+                populateJudgeUserSelect();
+                populateSuperAdminUserSelect();
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                window.location.href = 'login.html';
+                return;
+            }
+        });
+
+        // Load CSRF token
+        async function loadCSRFToken() {
+            try {
+                const response = await fetch('/api/auth/csrf-token');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        document.querySelector('meta[name="csrf-token"]').setAttribute('content', data.token);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load CSRF token:', error);
+            }
+        }
+
+        // Load admin statistics
+        async function loadAdminStats() {
+            try {
+                const response = await fetch('/api/admin/stats');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        updateAdminStats(data.stats);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load admin stats:', error);
+            }
+        }
+
+        // Update admin statistics display
+        function updateAdminStats(stats) {
+            document.getElementById('statTotalUsers').textContent = stats.total_users || 0;
+            document.getElementById('statTotalVideos').textContent = stats.total_videos || 0;
+            document.getElementById('statActiveCompetitions').textContent = stats.active_competitions || 0;
+            document.getElementById('statAvgRating').textContent = (stats.average_rating || 0).toFixed(1);
+        }
+
+        // Load admin users
+        async function loadAdminUsers() {
+            try {
+                const response = await fetch('/api/admin/users');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        displayAdminUsers(data.users);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load admin users:', error);
+            }
+        }
+
+        // Display admin users in table
+        function displayAdminUsers(users) {
+            const tbody = document.getElementById('usersTableBody');
+            
+            if (!users || users.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px;">
+                            <div style="color: var(--gray-500);">
+                                <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                                <p>No users found</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">${getUserInitials(user.full_name || user.email)}</div>
+                            ${user.full_name || 'Unknown User'}
+                        </div>
+                    </td>
+                    <td>${user.email}</td>
+                    <td>${user.role || 'User'}</td>
+                    <td><span class="status ${user.status || 'active'}">${user.status || 'Active'}</span></td>
+                    <td>${formatDate(user.created_at)}</td>
+                    <td>
+                        <button class="action-btn view" onclick="viewUser(${user.id})"><i class="fas fa-eye"></i></button>
+                        <button class="action-btn edit" onclick="editUser(${user.id})"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete" onclick="deleteUser(${user.id})"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Get user initials from name
+        function getUserInitials(name) {
+            if (!name) return 'U';
+            return name.split(' ').map(n => n.charAt(0)).join('').toUpperCase().substring(0, 2);
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            if (!dateString) return 'Unknown';
+            const date = new Date(dateString);
+            return date.toLocaleDateString();
+        }
+
+        // Load tab content
+        function loadTabContent(tabName) {
+            switch (tabName) {
+                case 'users':
+                    loadAdminUsers();
+                    break;
+                case 'videos':
+                    loadAdminVideos();
+                    break;
+                case 'competitions':
+                    loadAdminCompetitions();
+                    break;
+                case 'judges':
+                    loadAdminJudges();
+                    break;
+                case 'settings':
+                    loadAdminSettings();
+                    break;
+            }
+        }
+
+        // Load admin videos
+        async function loadAdminVideos() {
+            try {
+                const response = await fetch('/api/admin/videos');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        // Update table title and content for videos
+                        document.querySelector('.table-title').textContent = 'Video Management';
+                        // You would implement video display logic here
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load admin videos:', error);
+            }
+        }
+
+        // Load admin competitions
+        async function loadAdminCompetitions() {
+            try {
+                const response = await fetch('/api/admin/competitions');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        // Update table title and content for competitions
+                        document.querySelector('.table-title').textContent = 'Competition Management';
+                        // You would implement competition display logic here
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load admin competitions:', error);
+            }
+        }
+
+        // Load admin judges
+        async function loadAdminJudges() {
+            try {
+                const response = await fetch('/api/admin/users?role=judge');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        // Update table title and content for judges
+                        document.querySelector('.table-title').textContent = 'Judge Management';
+                        displayAdminUsers(data.users);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load admin judges:', error);
+            }
+        }
+
+        // Load admin settings
+        function loadAdminSettings() {
+            // Update table title for settings
+            document.querySelector('.table-title').textContent = 'System Settings';
+            // You would implement settings display logic here
+        }
+
+        // User actions
+        function viewUser(userId) {
+            console.log('View user:', userId);
+            // Implement user view logic
+        }
+
+        function editUser(userId) {
+            console.log('Edit user:', userId);
+            // Implement user edit logic
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                console.log('Delete user:', userId);
+                // Implement user deletion logic
+            }
+        }
+
+        // New function for granting judge access
+        async function grantJudgeAccess() {
+            const userId = document.getElementById('judgeUserSelect').value;
+            const role = document.getElementById('judgeRole').value;
+            const messageDiv = document.getElementById('judgeAccessMessage');
+
+            if (!userId) {
+                messageDiv.textContent = 'Please select a user to grant access.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                return;
+            }
+
+            if (!role) {
+                messageDiv.textContent = 'Please select a role for the user.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                return;
+            }
+
+            messageDiv.textContent = 'Granting judge access...';
+            messageDiv.className = 'message';
+            messageDiv.style.display = 'block';
+
+            try {
+                const csrfToken = getCSRFToken();
+                const response = await fetch('/api/admin/grant-judge-access', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': csrfToken
+                    },
+                    body: JSON.stringify({ userId, role })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    messageDiv.textContent = `Judge access granted to ${data.user.full_name || data.user.email} as ${role}.`;
+                    messageDiv.className = 'message success';
+                    // Optionally, refresh the users list to show the new role
+                    loadAdminUsers();
+                } else {
+                    messageDiv.textContent = data.message || 'Failed to grant judge access.';
+                    messageDiv.className = 'message error';
+                }
+            } catch (error) {
+                console.error('Error granting judge access:', error);
+                messageDiv.textContent = 'An error occurred while granting judge access.';
+                messageDiv.className = 'message error';
+            } finally {
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000); // Hide message after 5 seconds
+            }
+        }
+
+        // Function to populate judge user select dropdown
+        function populateJudgeUserSelect() {
+            const select = document.getElementById('judgeUserSelect');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser || currentUser.role !== 'admin') {
+                select.innerHTML = '<option value="">Access denied</option>';
+                return;
+            }
+
+            // Get users from localStorage (in real app, this would be from API)
+            const users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            const eligibleUsers = users.filter(user => 
+                user.role === 'user' && !user.judge_role // Only regular users who aren't already judges
+            );
+
+            select.innerHTML = '<option value="">Select a user...</option>';
+            eligibleUsers.forEach(user => {
+                const option = document.createElement('option');
+                option.value = user.id || user.email;
+                option.textContent = `${user.username || user.email} (${user.age_group || 'N/A'})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Super Admin Functions
+        function showSuperAdminFeatures() {
+            // Show super admin sections
+            document.getElementById('superAdminSection').style.display = 'block';
+            document.getElementById('judgeManagementSection').style.display = 'block';
+            
+            // Populate super admin user select
+            populateSuperAdminUserSelect();
+            
+            // Update page title to show super admin status
+            document.title = 'Super Admin Panel - TalentUp Sri Lanka';
+        }
+
+        // Function to grant super admin access
+        async function grantSuperAdminAccess() {
+            const userId = document.getElementById('superAdminUserSelect').value;
+            const messageDiv = document.getElementById('superAdminMessage');
+            
+            if (!userId) {
+                messageDiv.textContent = 'Please select a user to grant super admin access.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                return;
+            }
+
+            messageDiv.style.display = 'block';
+            messageDiv.textContent = 'Granting super admin access...';
+            messageDiv.className = 'message';
+
+            try {
+                // Update user role in localStorage (in real app, this would be an API call)
+                const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+                const userIndex = users.findIndex(u => u.id === userId || u.email === userId);
+                
+                if (userIndex !== -1) {
+                    users[userIndex].role = 'super_admin';
+                    localStorage.setItem('registeredUsers', JSON.stringify(users));
+                    
+                    messageDiv.textContent = `Super admin access granted to ${users[userIndex].username || users[userIndex].email}.`;
+                    messageDiv.className = 'message success';
+                    
+                    // Refresh the users list
+                    loadAdminUsers();
+                    populateSuperAdminUserSelect();
+                } else {
+                    messageDiv.textContent = 'User not found.';
+                    messageDiv.className = 'message error';
+                }
+            } catch (error) {
+                console.error('Error granting super admin access:', error);
+                messageDiv.textContent = 'An error occurred while granting super admin access.';
+                messageDiv.className = 'message error';
+            } finally {
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Function to populate super admin user select dropdown
+        function populateSuperAdminUserSelect() {
+            const select = document.getElementById('superAdminUserSelect');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser || currentUser.role !== 'super_admin') {
+                select.innerHTML = '<option value="">Access denied</option>';
+                return;
+            }
+
+            // Get users from localStorage (in real app, this would be from API)
+            const users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            const eligibleUsers = users.filter(user => 
+                user.role === 'user' || user.role === 'admin' // Can promote users or admins to super admin
+            );
+
+            select.innerHTML = '<option value="">Select a user...</option>';
+            eligibleUsers.forEach(user => {
+                const option = document.createElement('option');
+                option.value = user.id || user.email;
+                option.textContent = `${user.username || user.email} (${user.role})`;
+                select.appendChild(option);
+            });
+        }
+
+        // Update navigation based on user role and authentication
+        function updateNavigation() {
+            try {
+                const currentUser = localStorage.getItem('currentUser');
+                const loginBtn = document.getElementById('loginBtn');
+                const registerBtn = document.getElementById('registerBtn');
+                const profileBtn = document.getElementById('profileBtn');
+                const logoutBtn = document.getElementById('logoutBtn');
+                const dashboardBtn = document.getElementById('dashboardBtn');
+                const adminBtn = document.getElementById('adminBtn');
+                const judgeBtn = document.getElementById('judgeBtn');
+                
+                // Check if all elements exist
+                if (!loginBtn || !registerBtn || !profileBtn || !logoutBtn || !dashboardBtn || !adminBtn || !judgeBtn) {
+                    console.warn('Some navigation elements not found, skipping navigation update');
+                    return;
+                }
+                
+                if (currentUser) {
+                    try {
+                        const user = JSON.parse(currentUser);
+                        
+                        // Hide login/register buttons, show logout and profile
+                        loginBtn.style.display = 'none';
+                        registerBtn.style.display = 'none';
+                        profileBtn.style.display = 'inline-block';
+                        logoutBtn.style.display = 'inline-block';
+                        
+                        // Show role-based navigation options
+                        if (user.role === 'super_admin') {
+                            // Super admin has access to everything
+                            dashboardBtn.style.display = 'inline-block';
+                            adminBtn.style.display = 'inline-block';
+                            judgeBtn.style.display = 'inline-block';
+                        } else if (user.role === 'admin') {
+                            // Admin can access everything
+                            dashboardBtn.style.display = 'inline-block';
+                            adminBtn.style.display = 'inline-block';
+                            judgeBtn.style.display = 'inline-block';
+                        } else if (user.role === 'judge') {
+                            // Judge can access dashboard and judge panel
+                            dashboardBtn.style.display = 'inline-block';
+                            adminBtn.style.display = 'none';
+                            judgeBtn.style.display = 'inline-block';
+                        } else {
+                            // Regular user can only access dashboard
+                            dashboardBtn.style.display = 'inline-block';
+                            adminBtn.style.display = 'none';
+                            judgeBtn.style.display = 'none';
+                        }
+                        
+                    } catch (error) {
+                        console.error('Error parsing user data:', error);
+                        // Reset to default state on error
+                        resetNavigation();
+                    }
+                } else {
+                    // No user logged in - show only public navigation
+                    resetNavigation();
+                }
+            } catch (error) {
+                console.error('Error in updateNavigation:', error);
+            }
+        }
+        
+        // Reset navigation to default state (public access)
+        function resetNavigation() {
+            try {
+                const loginBtn = document.getElementById('loginBtn');
+                const registerBtn = document.getElementById('registerBtn');
+                const profileBtn = document.getElementById('profileBtn');
+                const logoutBtn = document.getElementById('logoutBtn');
+                const dashboardBtn = document.getElementById('dashboardBtn');
+                const adminBtn = document.getElementById('adminBtn');
+                const judgeBtn = document.getElementById('judgeBtn');
+                
+                // Check if all elements exist
+                if (!loginBtn || !registerBtn || !profileBtn || !logoutBtn || !dashboardBtn || !adminBtn || !judgeBtn) {
+                    console.warn('Some navigation elements not found, skipping navigation reset');
+                    return;
+                }
+                
+                loginBtn.style.display = 'inline-block';
+                registerBtn.style.display = 'inline-block';
+                profileBtn.style.display = 'none';
+                logoutBtn.style.display = 'none';
+                dashboardBtn.style.display = 'none';
+                adminBtn.style.display = 'none';
+                judgeBtn.style.display = 'none';
+            } catch (error) {
+                console.error('Error in resetNavigation:', error);
+            }
+        }
+
+
+
+        // Get CSRF token
+        function getCSRFToken() {
+            return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('userAvatar');
+            fetch('../php_api/auth_logout.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }).catch(error => {
+                console.error('Logout error:', error);
+            }).finally(() => {
+                window.location.href = 'login.html';
+            });
+        }
+    </script>
+</body>
+</html>

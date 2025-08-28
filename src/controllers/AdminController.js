@@ -10,12 +10,15 @@ const CompetitionModel = require('../models/CompetitionModel');
 const FeedbackSummaryModel = require('../models/FeedbackSummaryModel');
 const SupabaseService = require('../services/SupabaseService');
 const { requireAuth } = require('../middleware/auth');
-const { requireRole } = require('../middleware/roleCheck');
+const { requireRole, requireSuperAdmin, requireAdminOrSuperAdmin } = require('../middleware/roleCheck');
 const { validateCSRFToken } = require('../middleware/csrf');
 const config = require('../config');
 
-// Admin-only middleware
-const requireAdmin = [requireAuth, requireRole(['admin'])];
+// Admin-only middleware (admin or super admin)
+const requireAdmin = [requireAuth, requireAdminOrSuperAdmin];
+
+// Super admin only middleware
+const requireSuperAdminOnly = [requireAuth, requireSuperAdmin];
 
 // Get dashboard stats
 router.get('/stats', ...requireAdmin, async (req, res) => {

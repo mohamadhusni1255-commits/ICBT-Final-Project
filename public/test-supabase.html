@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+</head>
+<body>
+    <h1>Test Supabase Client</h1>
+    <button onclick="testSupabase()">Test Supabase Client</button>
+    <div id="result"></div>
+    
+    <script>
+        function testSupabase() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                console.log('Testing Supabase client...');
+                console.log('window.supabaseClient:', window.supabaseClient);
+                
+                if (!window.supabaseClient) {
+                    resultDiv.innerHTML = 'ERROR: Supabase client not initialized';
+                    return;
+                }
+                
+                if (!window.supabaseClient.auth) {
+                    resultDiv.innerHTML = 'ERROR: Supabase auth not available';
+                    return;
+                }
+                
+                if (!window.supabaseClient.auth.signUp) {
+                    resultDiv.innerHTML = 'ERROR: signUp method not available';
+                    return;
+                }
+                
+                resultDiv.innerHTML = 'SUCCESS: Supabase client is working properly!';
+                
+                // Test the signUp method
+                window.supabaseClient.auth.signUp({
+                    email: 'test@example.com',
+                    password: 'test123',
+                    options: {
+                        data: {
+                            username: 'testuser',
+                            role: 'user'
+                        }
+                    }
+                }).then(result => {
+                    console.log('Test signUp result:', result);
+                    resultDiv.innerHTML += '<br>Test signUp completed successfully!';
+                }).catch(error => {
+                    console.error('Test signUp error:', error);
+                    resultDiv.innerHTML += '<br>Test signUp failed: ' + error.message;
+                });
+                
+            } catch (error) {
+                console.error('Test error:', error);
+                resultDiv.innerHTML = 'ERROR: ' + error.message;
+            }
+        }
+        
+        // Auto-test on page load
+        window.addEventListener('load', () => {
+            setTimeout(testSupabase, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Registration</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        button { padding: 10px; margin: 5px; }
+        input { padding: 8px; margin: 5px; width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>Debug Registration</h1>
+    
+    <div class="debug">
+        <h3>Step 1: Check Supabase Client</h3>
+        <button onclick="checkClient()">Check Client Status</button>
+        <div id="clientStatus">Not checked yet</div>
+    </div>
+    
+    <div class="debug">
+        <h3>Step 2: Test Registration</h3>
+        <input type="email" id="testEmail" placeholder="test@example.com" value="test@example.com">
+        <input type="password" id="testPassword" placeholder="password123" value="password123">
+        <button onclick="testRegistration()">Test Registration</button>
+        <div id="registrationResult">Not tested yet</div>
+    </div>
+    
+    <div class="debug">
+        <h3>Step 3: Check Demo Users</h3>
+        <button onclick="checkDemoUsers()">Check Demo Users</button>
+        <div id="demoUsers">Not checked yet</div>
+    </div>
+    
+    <div class="debug">
+        <h3>Step 4: Test Login</h3>
+        <button onclick="testLogin()">Test Login</button>
+        <div id="loginResult">Not tested yet</div>
+    </div>
+
+    <script>
+        function checkClient() {
+            const status = document.getElementById('clientStatus');
+            if (window.supabaseClient) {
+                status.innerHTML = '✅ Client found: ' + (window.supabaseClient.auth ? 'Has auth methods' : 'No auth methods');
+            } else {
+                status.innerHTML = '❌ Client not found';
+            }
+        }
+        
+        async function testRegistration() {
+            const result = document.getElementById('registrationResult');
+            result.innerHTML = 'Processing...';
+            
+            try {
+                if (!window.supabaseClient) {
+                    throw new Error('No Supabase client');
+                }
+                
+                const { data, error } = await window.supabaseClient.auth.signUp({
+                    email: document.getElementById('testEmail').value,
+                    password: document.getElementById('testPassword').value,
+                    options: {
+                        data: { username: 'testuser', role: 'user' }
+                    }
+                });
+                
+                if (error) {
+                    result.innerHTML = '❌ Error: ' + error.message;
+                } else {
+                    result.innerHTML = '✅ Success: ' + JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                result.innerHTML = '❌ Exception: ' + error.message;
+            }
+        }
+        
+        function checkDemoUsers() {
+            const users = JSON.parse(localStorage.getItem('demoUsers') || '[]');
+            document.getElementById('demoUsers').innerHTML = 'Users: ' + users.length + '<br>' + 
+                users.map(u => `${u.email} (${u.id})`).join('<br>');
+        }
+        
+        async function testLogin() {
+            const result = document.getElementById('loginResult');
+            result.innerHTML = 'Processing...';
+            
+            try {
+                if (!window.supabaseClient) {
+                    throw new Error('No Supabase client');
+                }
+                
+                const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+                    email: document.getElementById('testEmail').value,
+                    password: document.getElementById('testPassword').value
+                });
+                
+                if (error) {
+                    result.innerHTML = '❌ Error: ' + error.message;
+                } else {
+                    result.innerHTML = '✅ Success: ' + JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                result.innerHTML = '❌ Exception: ' + error.message;
+            }
+        }
+        
+        // Auto-check on load
+        setTimeout(checkClient, 1000);
+    </script>
+</body>
+</html>
